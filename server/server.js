@@ -62,7 +62,7 @@ app.post('/api/send-email', async (req, res) => {
 
   try {
     const info = await sendMail({
-      to: 'sebastian.aguayo@agrosilo.com.py',
+      to: 'canhetesebas@gmail.com',//a quien va
       subject: 'Nuevo mensaje de contacto - Grupo Favero',
       text: emailContent,
     });
