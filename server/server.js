@@ -19,8 +19,8 @@ async function sendMail({ to, subject, text }) {
   console.log('Attempting to create transporter...');
   const transporter = nodemailer.createTransport({
     host: 'mail.agrosilo.com.py',
-    port: 995, // Puerto para SSL/TLS
-    secure: true, // Usar SSL/TLS
+    port: 465, 
+    secure: true, 
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
