@@ -5,7 +5,8 @@ const navItems = [
   { name: "QUIÉNES SOMOS", href: "#quienes-somos" },
   { name: "NUESTRAS EMPRESAS", href: "#nuestras-empresas" },
   { name: "RSE", href: "#rse" },
-  { name: "CONTÁCTENOS", href: "#contacto" }
+  { name: "CONTÁCTENOS", href: "#contacto" },
+  { name: "TRABAJA CON NOSOTROS", href: "/postulacion" },
 ];
 
 const HeaderGf = forwardRef(({ onNavClick, quienesSomosRef }, ref) => {
