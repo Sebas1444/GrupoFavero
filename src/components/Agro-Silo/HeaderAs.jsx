@@ -11,9 +11,10 @@ const navItems = [
 
 const images = [
   { src: '/img/edificio.png', alt: 'Agro Silo Santa Catalina - Cedrales' },
-  { src: '/img/silo1.jpg', alt: 'Silo 1' },
-  { src: '/img/silo2.jpg', alt: 'Silo 2' },
-  { src: '/img/silo3.jpg', alt: 'Silo 3' },
+  { src: '/img/edificio.png', alt: 'Silo 1' },
+  { src: '/img/edificio.png', alt: 'Silo 2' },
+  { src: '/img/edificio.png', alt: 'Silo 3' },
+  { src: '/img/campo-trigo.jpg', alt: 'Campo de trigo al atardecer' },
 ];
 
 const HeaderAs = forwardRef(({ onNavClick, quienesSomosRef }, ref) => {
@@ -95,44 +96,40 @@ const HeaderAs = forwardRef(({ onNavClick, quienesSomosRef }, ref) => {
         )}
       </header>
 
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid md:grid-cols-2 gap-8 items-center">
-          <div className="text-white">
+      <div className="relative h-screen">
+        <div className="absolute inset-0">
+          <img
+            src={images[currentImageIndex].src}
+            alt={images[currentImageIndex].alt}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+        </div>
+        <div className="relative container mx-auto px-4 py-16 h-full flex flex-col justify-center">
+          <div className="text-white max-w-3xl">
             <h1 ref={quienesSomosRef} id="quienes-somos" className="text-4xl md:text-5xl font-bold mb-6">NOSOTROS</h1>
             <p className="text-lg mb-4">
               <span className="font-bold">Agro Silo Santa Catalina S.A.</span> es la empresa pionera del Grupo Favero, dedicada principalmente a la producción, acopio y comercialización de productos agrícolas, especialmente la soja, así como también maíz, trigo, canola y girasol, a través de los 13 silos que se encuentran distribuidos estratégicamente en la Región Oriental, con infraestructura de recepción de granos, básculas, control de calidad y secaderos.
             </p>
             <p className="text-lg mb-4">
-              <span className="font-bold"></span>  Cuenta con un plantel de Ingenieros Agrónomos altamente capacitados, con gran experiencia, que acompañan tanto a la empresa como a los productores independientes, desde la preparación de sus terrenos hasta la cosecha. Las operaciones de la empresa representaron en el Ranking de Impuestos (2014) la posición N° 10, como una de las mejores empresas aportantes al fisco con Gs. 82.765.751.988, el criterio utilizado por el fisco incluye todos los pagos efectuados a la SET y las retenciones que le fueron practicadas. Lo que confirma también el compromiso de esta firma con el desarrollo económico del país.
+              Cuenta con un plantel de Ingenieros Agrónomos altamente capacitados, con gran experiencia, que acompañan tanto a la empresa como a los productores independientes, desde la preparación de sus terrenos hasta la cosecha. Las operaciones de la empresa representaron en el Ranking de Impuestos (2014) la posición N° 10, como una de las mejores empresas aportantes al fisco con Gs. 82.765.751.988, el criterio utilizado por el fisco incluye todos los pagos efectuados a la SET y las retenciones que le fueron practicadas. Lo que confirma también el compromiso de esta firma con el desarrollo económico del país.
             </p>
           </div>
-          <div className="relative group">
-            <img
-              src={images[currentImageIndex].src}
-              alt={images[currentImageIndex].alt}
-              className="rounded-lg shadow-xl transition-transform duration-300 group-hover:scale-105 w-full h-auto"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-customBlue opacity-10 rounded-lg transition-opacity duration-300 group-hover:opacity-0"></div>
-            <div className="absolute inset-0 flex items-end justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <p className="text-white text-xl font-bold bg-black bg-opacity-50 w-full text-center py-2 rounded-b-lg">{images[currentImageIndex].alt}</p>
-            </div>
-            <button 
-              onClick={prevImage} 
-              className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition-all"
-              aria-label="Imagen anterior"
-            >
-              <ChevronLeft size={24} />
-            </button>
-            <button 
-              onClick={nextImage} 
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition-all"
-              aria-label="Siguiente imagen"
-            >
-              <ChevronRight size={24} />
-            </button>
-          </div>
         </div>
+        <button 
+          onClick={prevImage} 
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition-all"
+          aria-label="Imagen anterior"
+        >
+          <ChevronLeft size={24} />
+        </button>
+        <button 
+          onClick={nextImage} 
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition-all"
+          aria-label="Siguiente imagen"
+        >
+          <ChevronRight size={24} />
+        </button>
       </div>
     </div>
   );
