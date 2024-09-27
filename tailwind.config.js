@@ -9,7 +9,7 @@ module.exports = {
       colors: {
         customBlue: '#00304a',  // Primer color personalizado
         //customRed: '#ff0000',   // Otro color personalizado
-        //customGreen: '#00ff00', // Otro color más
+        customGreen: '#224a1a',
         // Agrega más colores según necesites
       },
     },

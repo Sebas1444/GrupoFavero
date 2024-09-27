@@ -39,6 +39,30 @@ function LazyLoad({ children, placeholder }) {
   );
 }
 
+function MainApp({ onNavClick, headerRef, quienesSomosRef, nuestrasEmpresasRef, rseRef, contactoRef }) {
+  return (
+    <>
+      <HeaderGf onNavClick={onNavClick} ref={headerRef} quienesSomosRef={quienesSomosRef} />
+      <div className="h-[100px]"></div>
+      <LazyLoad placeholder={<div>Cargando Empresas...</div>}>
+        <div ref={nuestrasEmpresasRef}>
+          <EmpresasGf />
+        </div>
+      </LazyLoad>
+      <LazyLoad placeholder={<div>Cargando RSE...</div>}>
+        <div ref={rseRef}>
+          <RseGf />
+        </div>
+      </LazyLoad>
+      <LazyLoad placeholder={<div>Cargando Contacto...</div>}>
+        <div ref={contactoRef}>
+          <ContactoFooterGf />
+        </div>
+      </LazyLoad>
+    </>
+  );
+}
+
 export function App() {
   const headerRef = useRef(null);
   const quienesSomosRef = useRef(null);
@@ -67,33 +91,18 @@ export function App() {
   };
 
   return (
-    <div className="flex flex-col">
-      <HeaderGf onNavClick={handleNavClick} ref={headerRef} quienesSomosRef={quienesSomosRef} />
-      <div className="h-[100px]"></div>
-      <Routes>
-        <Route path="/" element={
-          <>
-            <LazyLoad placeholder={<div>Cargando Empresas...</div>}>
-              <div ref={nuestrasEmpresasRef}>
-                <EmpresasGf />
-              </div>
-            </LazyLoad>
-            <LazyLoad placeholder={<div>Cargando RSE...</div>}>
-              <div ref={rseRef}>
-                <RseGf />
-              </div>
-            </LazyLoad>
-          </>
-        } />
-        <Route path="/Agro-Silo/*" element={<AgroSiloApp />} />
-      </Routes>
-      {location.pathname === '/' && (
-        <LazyLoad placeholder={<div>Cargando Contacto...</div>}>
-          <div ref={contactoRef}>
-            <ContactoFooterGf />
-          </div>
-        </LazyLoad>
-      )}
-    </div>
+    <Routes>
+      <Route path="/" element={
+        <MainApp 
+          onNavClick={handleNavClick}
+          headerRef={headerRef}
+          quienesSomosRef={quienesSomosRef}
+          nuestrasEmpresasRef={nuestrasEmpresasRef}
+          rseRef={rseRef}
+          contactoRef={contactoRef}
+        />
+      } />
+      <Route path="/Agro-Silo/*" element={<AgroSiloApp />} />
+    </Routes>
   );
 }
