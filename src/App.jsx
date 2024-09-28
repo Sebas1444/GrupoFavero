@@ -46,11 +46,13 @@ function MainApp({ onNavClick, headerRef, quienesSomosRef, nuestrasEmpresasRef, 
 
   useEffect(() => {
     if (location.state && location.state.scrollTo) {
-      const element = document.querySelector(`#${location.state.scrollTo}`);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-      navigate(location.pathname, { replace: true, state: {} });
+      setTimeout(() => {
+        const element = document.getElementById(location.state.scrollTo);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+        navigate('/', { replace: true, state: {} });
+      }, 100);
     }
   }, [location, navigate]);
 
@@ -58,18 +60,21 @@ function MainApp({ onNavClick, headerRef, quienesSomosRef, nuestrasEmpresasRef, 
     <>
       <HeaderGf onNavClick={onNavClick} ref={headerRef} quienesSomosRef={quienesSomosRef} />
       <div className="h-[100px]"></div>
+      <div id="quienes-somos" ref={quienesSomosRef}>
+        {/* Contenido de Quiénes Somos */}
+      </div>
       <LazyLoad placeholder={<div>Cargando Empresas...</div>}>
-        <div ref={nuestrasEmpresasRef} id="nuestras-empresas">
+        <div id="nuestras-empresas" ref={nuestrasEmpresasRef}>
           <EmpresasGf />
         </div>
       </LazyLoad>
       <LazyLoad placeholder={<div>Cargando RSE...</div>}>
-        <div ref={rseRef} id="rse">
+        <div id="rse" ref={rseRef}>
           <RseGf />
         </div>
       </LazyLoad>
       <LazyLoad placeholder={<div>Cargando Contacto...</div>}>
-        <div ref={contactoRef} id="contacto">
+        <div id="contacto" ref={contactoRef}>
           <ContactoFooterGf />
         </div>
       </LazyLoad>
@@ -85,7 +90,8 @@ export function App() {
   const contactoRef = useRef(null);
 
   const handleNavClick = (href) => {
-    const element = document.querySelector(href);
+    const sectionId = href.replace('#', '');
+    const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
