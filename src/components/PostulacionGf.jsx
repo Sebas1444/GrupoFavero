@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Facebook, Instagram, Youtube } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
@@ -19,25 +20,19 @@ export default function PostulacionGf() {
     setIsMenuOpen(false);
 
     if (href.startsWith('/#')) {
-      navigate('/');
-      setTimeout(() => {
-        const element = document.querySelector(href.substring(2));
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
+      const sectionId = href.substring(2);
+      navigate('/', { state: { scrollTo: sectionId } });
     } else {
       navigate(href);
     }
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white flex flex-col">
       <header className="bg-white shadow-md">
-      <div className="bg-customBlue py-2">
+        <div className="bg-customBlue py-2">
           <div className="container mx-auto px-4">
             {/* Contenido de la barra superior */}
-            {/* <p className="text-white text-sm">Bienvenidos al Grupo Favero</p> */}
           </div>
         </div>
         <nav className="container mx-auto px-4">
@@ -85,7 +80,7 @@ export default function PostulacionGf() {
         )}
       </header>
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 flex-grow">
         <h1 className="text-3xl font-bold text-customBlue mb-6">Trabaja con Nosotros</h1>
         <p className="text-gray-600 mb-4">
           Bienvenido a nuestra página de postulaciones. Aquí podrás encontrar información sobre nuestras ofertas de trabajo y cómo aplicar.
@@ -117,6 +112,28 @@ export default function PostulacionGf() {
           </form>
         </div>
       </main>
+
+      <footer className="bg-customBlue text-white py-8">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="flex space-x-4 mb-4 md:mb-0">
+              <a href="https://www.facebook.com/grupofavero" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                <Facebook className="w-6 h-6" />
+              </a>
+              <a href="https://www.instagram.com/grupofaveropy/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <Instagram className="w-6 h-6" />
+              </a>
+              <a href="https://www.youtube.com/@grupofavero5232" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                <Youtube className="w-6 h-6" />
+              </a>
+            </div>
+            <p className="text-center md:text-left mb-4 md:mb-0">
+              © 2024 Grupo Favero. Todos los derechos reservados.
+            </p>
+            <p className="text-sm">Diseñado por {"{ESCA}"}</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
-}   
+}
