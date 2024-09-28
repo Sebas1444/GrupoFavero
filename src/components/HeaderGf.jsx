@@ -1,20 +1,23 @@
 import React, { useState, forwardRef } from 'react';
 import { Menu, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const navItems = [
   { name: "QUIÉNES SOMOS", href: "#quienes-somos" },
   { name: "NUESTRAS EMPRESAS", href: "#nuestras-empresas" },
   { name: "RSE", href: "#rse" },
   { name: "CONTÁCTENOS", href: "#contacto" },
-  { name: "TRABAJA CON NOSOTROS", href: "/postulacion" },
+  { name: "TRABAJA CON NOSOTROS", href: "/PostulacionGf" },
 ];
 
 const HeaderGf = forwardRef(({ onNavClick, quienesSomosRef }, ref) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleNavClick = (e, href) => {
-    e.preventDefault();
-    onNavClick(href);
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      onNavClick(href);
+    }
     setIsMenuOpen(false);
   };
 
@@ -24,6 +27,7 @@ const HeaderGf = forwardRef(({ onNavClick, quienesSomosRef }, ref) => {
         <div className="bg-customBlue py-2">
           <div className="container mx-auto px-4">
             {/* Contenido de la barra superior */}
+            {/* <p className="text-white text-sm">Bienvenidos al Grupo Favero</p> */}
           </div>
         </div>
         <nav className="bg-white">
@@ -35,19 +39,31 @@ const HeaderGf = forwardRef(({ onNavClick, quienesSomosRef }, ref) => {
               
               <div className="hidden md:flex space-x-6">
                 {navItems.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="text-customBlue hover:text-blue-400 transition-colors font-semibold"
-                    onClick={(e) => handleNavClick(e, item.href)}
-                  >
-                    {item.name}
-                  </a>
+                  item.href.startsWith('#') ? (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      className="text-customBlue hover:text-blue-400 transition-colors font-semibold"
+                      onClick={(e) => handleNavClick(e, item.href)}
+                    >
+                      {item.name}
+                    </a>
+                  ) : (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      className="text-customBlue hover:text-blue-400 transition-colors font-semibold"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  )
                 ))}
               </div>
               <button
                 className="md:hidden text-customBlue"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
               >
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -58,14 +74,25 @@ const HeaderGf = forwardRef(({ onNavClick, quienesSomosRef }, ref) => {
           <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-md z-50">
             <div className="container mx-auto px-4 py-2">
               {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="block py-2 text-customBlue hover:text-customBlue transition-colors font-semibold"
-                  onClick={(e) => handleNavClick(e, item.href)}
-                >
-                  {item.name}
-                </a>
+                item.href.startsWith('#') ? (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="block py-2 text-customBlue hover:text-blue-400 transition-colors font-semibold"
+                    onClick={(e) => handleNavClick(e, item.href)}
+                  >
+                    {item.name}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="block py-2 text-customBlue hover:text-blue-400 transition-colors font-semibold"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                )
               ))}
             </div>
           </div>

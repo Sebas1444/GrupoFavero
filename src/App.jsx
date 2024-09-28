@@ -5,6 +5,7 @@ import EmpresasGf from './components/EmpresasGf';
 import RseGf from './components/RseGf';
 import ContactoFooterGf from './components/ContactoFooterGf';
 import AgroSiloApp from './components/Agro-Silo/App';
+import PostulacionGf from './components/PostulacionGf'; // Asegúrate de que este import esté correcto
 
 function LazyLoad({ children, placeholder }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -103,6 +104,7 @@ export function App() {
         />
       } />
       <Route path="/Agro-Silo/*" element={<AgroSiloApp />} />
+      <Route path="/PostulacionGf" element={<PostulacionGf />} />
     </Routes>
   );
 }
