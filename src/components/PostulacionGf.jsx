@@ -14,6 +14,15 @@ const navItems = [
 export default function PostulacionGf() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    nombre: '',
+    apellido: '',
+    telefono: '',
+    email: '',
+    mensaje: '',
+    cv: null
+  });
+  const [formErrors, setFormErrors] = useState({});
 
   const handleNavClick = (e, href) => {
     e.preventDefault();
@@ -24,6 +33,53 @@ export default function PostulacionGf() {
       navigate('/', { state: { scrollTo: sectionId } });
     } else {
       navigate(href);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value, type, files } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: type === 'file' ? files[0] : value
+    }));
+  };
+
+  const validateForm = () => {
+    const errors = {};
+    if (!formData.nombre.trim()) errors.nombre = "El nombre es requerido";
+    if (!formData.apellido.trim()) errors.apellido = "El apellido es requerido";
+    if (!formData.telefono.trim()) errors.telefono = "El teléfono es requerido";
+    if (!formData.email.trim()) errors.email = "El email es requerido";
+    if (!formData.mensaje.trim()) errors.mensaje = "El mensaje es requerido";
+    if (!formData.cv) errors.cv = "El CV es requerido";
+    else {
+      const allowedExtensions = ['pdf', 'doc', 'docx', 'jpeg', 'jpg'];
+      const fileExtension = formData.cv.name.split('.').pop().toLowerCase();
+      if (!allowedExtensions.includes(fileExtension)) {
+        errors.cv = "El archivo debe ser PDF, DOC, DOCX o JPEG";
+      }
+    }
+    return errors;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const errors = validateForm();
+    if (Object.keys(errors).length === 0) {
+      // Aquí iría la lógica para enviar el formulario
+      console.log('Formulario enviado:', formData);
+      alert('Formulario enviado con éxito');
+      // Resetear el formulario
+      setFormData({
+        nombre: '',
+        apellido: '',
+        telefono: '',
+        email: '',
+        mensaje: '',
+        cv: null
+      });
+    } else {
+      setFormErrors(errors);
     }
   };
 
@@ -80,32 +136,95 @@ export default function PostulacionGf() {
         )}
       </header>
 
-      <main className="container mx-auto px-4 py-8 flex-grow">
+      <main className="container mx-auto px-4 py-8 flex-grow" style={{ maxWidth: '2000px', maxHeight: '1200px', overflow: 'auto' }}>
         <h1 className="text-3xl font-bold text-customBlue mb-6">Trabaja con Nosotros</h1>
         <p className="text-gray-600 mb-4">
           Bienvenido a nuestra página de postulaciones. Aquí podrás encontrar información sobre nuestras ofertas de trabajo y cómo aplicar.
         </p>
         <div className="bg-gray-100 p-6 rounded-lg">
           <h2 className="text-2xl font-semibold text-customBlue mb-4">Formulario de Postulación</h2>
-          <form className="space-y-4">
-            <div>
-              <label htmlFor="nombre" className="block text-sm font-medium text-gray-700">Nombre completo</label>
-              <input type="text" id="nombre" name="nombre" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-customBlue focus:ring focus:ring-customBlue focus:ring-opacity-50" />
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="nombre" className="block text-sm font-medium text-gray-700">Nombre</label>
+                <input
+                  type="text"
+                  id="nombre"
+                  name="nombre"
+                  value={formData.nombre}
+                  onChange={handleChange}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-customBlue focus:ring focus:ring-customBlue focus:ring-opacity-50"
+                />
+                {formErrors.nombre && <p className="text-red-500 text-xs mt-1">{formErrors.nombre}</p>}
+              </div>
+              <div>
+                <label htmlFor="apellido" className="block text-sm font-medium text-gray-700">Apellido</label>
+                <input
+                  type="text"
+                  id="apellido"
+                  name="apellido"
+                  value={formData.apellido}
+                  onChange={handleChange}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-customBlue focus:ring focus:ring-customBlue focus:ring-opacity-50"
+                />
+                {formErrors.apellido && <p className="text-red-500 text-xs mt-1">{formErrors.apellido}</p>}
+              </div>
             </div>
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Correo electrónico</label>
-              <input type="email" id="email" name="email" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-customBlue focus:ring focus:ring-customBlue focus:ring-opacity-50" />
-            </div>
-            <div>
-              <label htmlFor="cv" className="block text-sm font-medium text-gray-700">Adjuntar CV</label>
-              <input type="file" id="cv" name="cv" className="mt-1 block w-full" />
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="telefono" className="block text-sm font-medium text-gray-700">Teléfono</label>
+                <input
+                  type="tel"
+                  id="telefono"
+                  name="telefono"
+                  value={formData.telefono}
+                  onChange={handleChange}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-customBlue focus:ring focus:ring-customBlue focus:ring-opacity-50"
+                />
+                {formErrors.telefono && <p className="text-red-500 text-xs mt-1">{formErrors.telefono}</p>}
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-customBlue focus:ring focus:ring-customBlue focus:ring-opacity-50"
+                />
+                {formErrors.email && <p className="text-red-500 text-xs mt-1">{formErrors.email}</p>}
+              </div>
             </div>
             <div>
               <label htmlFor="mensaje" className="block text-sm font-medium text-gray-700">Mensaje</label>
-              <textarea id="mensaje" name="mensaje" rows="4" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-customBlue focus:ring focus:ring-customBlue focus:ring-opacity-50"></textarea>
+              <textarea
+                id="mensaje"
+                name="mensaje"
+                rows="4"
+                value={formData.mensaje}
+                onChange={handleChange}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-customBlue focus:ring focus:ring-customBlue focus:ring-opacity-50"
+              ></textarea>
+              {formErrors.mensaje && <p className="text-red-500 text-xs mt-1">{formErrors.mensaje}</p>}
             </div>
             <div>
-              <button type="submit" className="w-full bg-customBlue text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-customBlue focus:ring-opacity-50">
+              <label htmlFor="cv" className="block text-sm font-medium text-gray-700">Adjuntar CV (PDF, DOC, DOCX o JPEG)</label>
+              <input
+                type="file"
+                id="cv"
+                name="cv"
+                onChange={handleChange}
+                accept=".pdf,.doc,.docx,.jpeg,.jpg"
+                className="mt-1 block w-full"
+              />
+              {formErrors.cv && <p className="text-red-500 text-xs mt-1">{formErrors.cv}</p>}
+            </div>
+            <div>
+              <button
+                type="submit"
+                className="w-full bg-customBlue text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-customBlue focus:ring-opacity-50"
+              >
                 Enviar Postulación
               </button>
             </div>

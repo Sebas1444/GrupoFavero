@@ -11,8 +11,8 @@ const navItems = [
 
 const backgroundImages = [
   { src: '/img/campo-trigo.jpg', alt: 'Campo de trigo' },
-  { src: '/img/campo-trigo.jpg', alt: 'Silo 1' },
-  { src: '/img/campo-trigo.jpg', alt: 'Silo 2' },
+  { src: '/img/campo1.jpg', alt: 'Silo 1' },
+  { src: '/img/campo2.jpg', alt: 'Silo 2' },
   { src: '/img/campo-trigo.jpg', alt: 'Silo 3' },
 ];
 
