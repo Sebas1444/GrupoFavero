@@ -112,7 +112,7 @@ export default function PostulacionGf() {
         <div className="container mx-auto px-4 max-w-6xl py-8">
           <h2 className="text-3xl font-bold text-customBlue mb-8 text-center">TRABAJA CON NOSOTROS</h2>
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-xl font-semibold text-customBlue mb-4">Formulario de Postulación</h3>
+            <p className="text-xl font-semibold text-customBlue mb-4">¡Forma parte de nuestro equipo de trabajo enviando tu CV!</p>
             {formStatus && (
               <div className={`mb-4 p-4 rounded-md ${
                 formStatus.type === 'success' ? 'bg-green-100 text-green-700' :

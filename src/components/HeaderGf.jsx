@@ -34,13 +34,18 @@ const HeaderGf = forwardRef(({ onNavClick }, ref) => {
     setIsMenuOpen(false);
   };
 
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    window.location.href = '/';
+  };
+
   return (
     <div ref={ref} className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md' : 'bg-gradient-to-b from-customBlue to-customBlue'}`}>
       <header>
         <nav className={`${isScrolled ? 'py-2' : 'py-4'} transition-all duration-300`}>
           <div className="container mx-auto px-4">
             <div className="flex justify-between items-center">
-              <a href="/" onClick={(e) => { e.preventDefault(); window.location.reload(); }} className="flex items-center space-x-2">
+              <a href="/" onClick={handleLogoClick} className="flex items-center space-x-2">
                 <img src='/img/GrupoFavero.png' alt="Grupo Favero Logo" className={`transition-all duration-300 ${isScrolled ? 'h-10' : 'h-12'} w-auto`} loading="eager" />
               </a>
               
