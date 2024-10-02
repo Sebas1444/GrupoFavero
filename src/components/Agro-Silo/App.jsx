@@ -3,7 +3,7 @@ import HeaderAs from './HeaderAs';
 // import AgroSiloHero from './AgroSiloHero';
 // import AgroSiloServices from './AgroSiloServices';
 // import AgroSiloAbout from './AgroSiloAbout';
-// import AgroSiloContact from './AgroSiloContact';
+import FooterAs from './FooterAs';
 
 export default function App() {
   return (
@@ -11,8 +11,8 @@ export default function App() {
       <HeaderAs />
       {/* <AgroSiloHero />
       <AgroSiloServices />
-      <AgroSiloAbout />
-      <AgroSiloContact /> */}
+      <AgroSiloAbout /> */}
+      <FooterAs />
     </div>
   );
 }
