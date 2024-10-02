@@ -1,17 +1,9 @@
-import React, { useState } from 'react';
-import { Facebook, Instagram, Youtube, Menu, X } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
-
-const navItems = [
-  { name: "QUIÉNES SOMOS", href: "/#quienes-somos" },
-  { name: "NUESTRAS EMPRESAS", href: "/#nuestras-empresas" },
-  { name: "RSE", href: "/#rse" },
-  { name: "CONTÁCTENOS", href: "/#contacto" },
-  { name: "TRABAJA CON NOSOTROS", href: "/PostulacionGf" },
-];
+import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import HeaderGf from './HeaderGf';
+import FooterGf from './FooterGf';
 
 export default function PostulacionGf() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nombre: '',
@@ -23,14 +15,24 @@ export default function PostulacionGf() {
   });
   const [formErrors, setFormErrors] = useState({});
   const [formStatus, setFormStatus] = useState(null);
+  const [headerHeight, setHeaderHeight] = useState(0);
+  const headerRef = useRef(null);
 
-  const handleNavClick = (e, href) => {
-    e.preventDefault();
-    setIsMenuOpen(false);
+  useEffect(() => {
+    const updateHeaderHeight = () => {
+      if (headerRef.current) {
+        setHeaderHeight(headerRef.current.offsetHeight);
+      }
+    };
 
+    updateHeaderHeight();
+    window.addEventListener('resize', updateHeaderHeight);
+    return () => window.removeEventListener('resize', updateHeaderHeight);
+  }, []);
+
+  const handleNavClick = (href) => {
     if (href.startsWith('/#')) {
-      const sectionId = href.substring(2);
-      navigate('/', { state: { scrollTo: sectionId } });
+      navigate(href);
     } else {
       navigate(href);
     }
@@ -105,59 +107,9 @@ export default function PostulacionGf() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      <header className="bg-white shadow-md">
-        <div className="bg-customBlue py-2">
-          <div className="container mx-auto px-4">
-            {/* Contenido de la barra superior */}
-          </div>
-        </div>
-        <nav className="container mx-auto px-4">
-          <div className="flex justify-between items-center py-4">
-            <Link to="/" className="flex items-center space-x-2">
-              <img src='/img/GrupoFavero.png' alt="Grupo Favero Logo" className="h-12 w-auto" loading="eager" />
-            </Link>
-            
-            <div className="hidden md:flex space-x-6">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="text-customBlue hover:text-blue-400 transition-colors font-semibold"
-                  onClick={(e) => handleNavClick(e, item.href)}
-                >
-                  {item.name}
-                </a>
-              ))}
-            </div>
-            <button
-              className="md:hidden text-customBlue"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
-            >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-        </nav>
-        {isMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="block px-3 py-2 text-customBlue hover:text-blue-400 transition-colors font-semibold"
-                  onClick={(e) => handleNavClick(e, item.href)}
-                >
-                  {item.name}
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
-      </header>
-
-      <main className="flex-grow bg-gray-100 py-16">
-        <div className="container mx-auto px-4 max-w-6xl">
+      <HeaderGf ref={headerRef} onNavClick={handleNavClick} />
+      <main className="flex-grow bg-gray-100" style={{ paddingTop: `${headerHeight}px` }}>
+        <div className="container mx-auto px-4 max-w-6xl py-8">
           <h2 className="text-3xl font-bold text-customBlue mb-8 text-center">TRABAJA CON NOSOTROS</h2>
           <div className="bg-white rounded-lg shadow-md p-6">
             <h3 className="text-xl font-semibold text-customBlue mb-4">Formulario de Postulación</h3>
@@ -229,7 +181,7 @@ export default function PostulacionGf() {
                 </div>
               </div>
               <div>
-                <label htmlFor="mensaje" className="block text-sm font-medium text-gray-700 mb-1">Mensaje</label>
+                <label htmlFor="mensaje" className="block text-sm font-medium text-gray-700 mb-1">Mensaje y Cargo</label>
                 <textarea
                   id="mensaje"
                   name="mensaje"
@@ -266,28 +218,7 @@ export default function PostulacionGf() {
           </div>
         </div>
       </main>
-
-      <footer className="bg-customBlue text-white py-8">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex space-x-8 mb-4 md:mb-0">
-              <a href="https://www.facebook.com/grupofavero" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="transition-transform duration-300 ease-in-out hover:scale-125">
-                <Facebook className="w-8 h-8" />
-              </a>
-              <a href="https://www.instagram.com/grupofaveropy/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="transition-transform duration-300 ease-in-out hover:scale-125">
-                <Instagram className="w-8 h-8" />
-              </a>
-              <a href="https://www.youtube.com/@grupofavero5232" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="transition-transform duration-300 ease-in-out hover:scale-125">
-                <Youtube className="w-8 h-8" />
-              </a>
-            </div>
-            <p className="text-center md:text-left mb-4 md:mb-0">
-              © 2024 Grupo Favero. Todos los derechos reservados.
-            </p>
-            <p className="text-sm">Diseñado por {"{ESCA}"}</p>
-          </div>
-        </div>
-      </footer>
+      <FooterGf />
     </div>
   );
 }
