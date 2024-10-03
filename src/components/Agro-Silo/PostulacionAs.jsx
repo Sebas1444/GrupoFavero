@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import HeaderAs from './HeaderAs';
 import FooterAs from './FooterAs';
 
-export default function PostulacionGf() {
+export default function PostulacionAs() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nombre: '',
@@ -32,7 +32,13 @@ export default function PostulacionGf() {
 
   const handleNavClick = (href) => {
     if (href.startsWith('/#')) {
-      navigate(href);
+      navigate('/'); // Navega a la página principal
+      setTimeout(() => {
+        const element = document.querySelector(href.substring(1));
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
     } else {
       navigate(href);
     }
@@ -114,11 +120,10 @@ export default function PostulacionGf() {
           <div className="bg-white rounded-lg shadow-md p-6">
             <p className="text-xl font-semibold text-customGreen mb-4">¡Forma parte de nuestro equipo de trabajo enviando tu CV!</p>
             {formStatus && (
-              <div className={`mb-4 p-4 rounded-md ${
-                formStatus.type === 'success' ? 'bg-green-100 text-green-700' :
-                formStatus.type === 'error' ? 'bg-red-100 text-red-700' :
-                'bg-green-100 text-green-700'
-              }`}>
+              <div className={`mb-4 p-4 rounded-md ${formStatus.type === 'success' ? 'bg-green-100 text-green-700' :
+                  formStatus.type === 'error' ? 'bg-red-100 text-red-700' :
+                    'bg-green-100 text-green-700'
+                }`}>
                 {formStatus.message}
               </div>
             )}

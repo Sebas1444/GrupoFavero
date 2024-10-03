@@ -1,19 +1,17 @@
 import React, { useState, forwardRef, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import { useLocation, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const navItems = [
-  { name: "QUIÉNES SOMOS", href: "/#quienes-somos" },
-  { name: "NUESTRAS EMPRESAS", href: "/#nuestras-empresas" },
-  { name: "RSE", href: "/#rse" },
-  { name: "CONTÁCTENOS", href: "/#contacto" },
-  { name: "TRABAJA CON NOSOTROS", href: "/PostulacionAs" },
+  { name: "QUIÉNES SOMOS", href: "/Agro-Silo/#quienes-somosAs" },
+  { name: "NUESTRAS SUCURSALES", href: "/Agro-Silo/#nuestras-sucursalesAs" },
+  { name: "CONTÁCTENOS", href: "/Agro-Silo/#contactoAs" },
+  { name: "TRABAJA CON NOSOTROS", href: "/Agro-Silo/PostulacionAs" },
 ];
 
 const HeaderAs = forwardRef(({ onNavClick }, ref) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,36 +24,34 @@ const HeaderAs = forwardRef(({ onNavClick }, ref) => {
 
   const handleNavClick = (e, href) => {
     e.preventDefault();
-    if (location.pathname === '/' && href.startsWith('/#')) {
-      onNavClick(href.substring(1));
-    } else {
-      onNavClick(href);
-    }
+    onNavClick(href);
     setIsMenuOpen(false);
   };
 
   const handleLogoClick = (e) => {
     e.preventDefault();
-    window.location.href = '/';
+    onNavClick('/Agro-Silo/');
   };
 
   return (
     <div ref={ref} className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md' : 'bg-gradient-to-b from-customGreen to-customGreen'}`}>
       <header>
-        <div className="bg-customGreen py-2 w-full">
-          <div className="container mx-auto px-4">
-            <Link to="/" className="text-white hover:text-green-200 transition-colors">
-              ← Volver al Grupo Favero
-            </Link>
+        {!isScrolled && (
+          <div className="bg-customGreen py-2 w-full">
+            <div className="container mx-auto px-4">
+              <Link to="/" className="text-white hover:text-green-200 transition-colors">
+                ← Volver al Grupo Favero
+              </Link>
+            </div>
           </div>
-        </div>
+        )}
         <nav className={`${isScrolled ? 'py-2' : 'py-4'} transition-all duration-300`}>
           <div className="container mx-auto px-4">
             <div className="flex justify-between items-center">
-              <a href="/Agro-Silo" onClick={handleLogoClick} className="flex items-center space-x-2">
-                <img src='/img/GrupoFavero.png' alt="Grupo Favero Logo" className={`transition-all duration-300 ${isScrolled ? 'h-10' : 'h-12'} w-auto`} loading="eager" />
+              <a href="/Agro-Silo/" onClick={handleLogoClick} className="flex items-center space-x-2">
+                <img src='/img/AgroSilo2.png' alt="Agro Silo Logo" className={`transition-all duration-300 ${isScrolled ? 'h-10' : 'h-12'} w-auto`} loading="eager" />
               </a>
-
+              
               <div className="hidden md:flex space-x-6">
                 {navItems.map((item) => (
                   <a
