@@ -16,7 +16,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const upload = multer({ dest: 'uploads/' });
+// const upload = multer({ dest: 'uploads/' });
 
 async function sendPostulacionMail({ nombre, apellido, telefono, email, mensaje, cvFile }) {
   console.log('Attempting to create transporter for postulacion...');
@@ -37,7 +37,7 @@ async function sendPostulacionMail({ nombre, apellido, telefono, email, mensaje,
   try {
     const info = await transporter.sendMail({
       from: process.env.EMAIL_USER,
-      to: 'canhetesebas@gmail.com',
+      to: 'testpagweb24@gmail.com',
       subject: 'Nueva postulación recibida',
       text: `
         Nombre: ${nombre} ${apellido}

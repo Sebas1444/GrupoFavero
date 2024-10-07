@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 
 export default function ContactoAs() {
   return (
-    <section id="ContactoAs" className="bg-gray-100 py-16">
-      <h1></h1>
+    <section id="contactoAs" className="bg-gray-100 py-16">
+      <h1>CONTACTO</h1>
     </section>
   );
 }

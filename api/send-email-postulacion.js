@@ -21,7 +21,7 @@ export async function sendPostulacionMail({ nombre, apellido, telefono, email, m
 
   const mailOptions = {
     from: process.env.EMAIL_USER,
-    to: 'rrhhtebusca@gmail.com',
+    to: 'testpagweb24@gmail.com', //Para quien
     subject: 'Nueva postulación recibida',
     text: `
       Nombre: ${nombre} ${apellido}

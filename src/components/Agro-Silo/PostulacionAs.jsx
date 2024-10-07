@@ -114,7 +114,7 @@ export default function PostulacionAs() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <HeaderAs ref={headerRef} onNavClick={handleNavClick} />
-      <main className="flex-grow bg-gray-100" style={{ paddingTop: `${headerHeight}px` }}>
+      <main className="flex-grow bg-gray-100">
         <div className="container mx-auto px-4 max-w-6xl py-8">
           <h2 className="text-3xl font-bold text-customGreen mb-8 text-center">TRABAJA CON NOSOTROS</h2>
           <div className="bg-white rounded-lg shadow-md p-6">
