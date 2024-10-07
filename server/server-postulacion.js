@@ -37,7 +37,7 @@ async function sendPostulacionMail({ nombre, apellido, telefono, email, mensaje,
   try {
     const info = await transporter.sendMail({
       from: process.env.EMAIL_USER,
-      to: 'rrhhtebusca@gmail.com',
+      to: 'canhetesebas@gmail.com',
       subject: 'Nueva postulación recibida',
       text: `
         Nombre: ${nombre} ${apellido}

@@ -26,28 +26,22 @@ async function sendMail({ to, subject, text }) {
       pass: process.env.EMAIL_PASS,
     },
     tls: {
-      // No fallar en certificados inválidos
       rejectUnauthorized: false
     }
   });
 
   console.log('Transporter created, attempting to send mail...');
-  try {
-    const info = await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to,
-      subject,
-      text,
-    });
-    console.log('Mail sent successfully. Message ID:', info.messageId);
-    return info;
-  } catch (error) {
-    console.error('Error sending mail:', error);
-    throw error;
-  }
+  const info = await transporter.sendMail({
+    from: process.env.EMAIL_USER,
+    to,
+    subject,
+    text,
+  });
+  console.log('Mail sent successfully. Message ID:', info.messageId);
+  return info;
 }
 
-app.post('/api/send-email', async (req, res) => {
+app.post('/send-email', async (req, res) => {
   console.log('Received request:', req.body);
 
   const { nombre, apellido, telefono, email, mensaje } = req.body;
@@ -62,7 +56,7 @@ app.post('/api/send-email', async (req, res) => {
 
   try {
     const info = await sendMail({
-      to: 'canhetesebas@gmail.com',//a quien va
+      to: 'canhetesebas@gmail.com',
       subject: 'Nuevo mensaje de contacto - Grupo Favero',
       text: emailContent,
     });

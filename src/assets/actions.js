@@ -8,15 +8,15 @@ export async function sendContactForm(formData) {
       body: JSON.stringify(Object.fromEntries(formData)),
     });
 
-    const result = await response.json();
-
     if (!response.ok) {
-      throw new Error(result.message || 'Error al enviar el mensaje');
+      const errorText = await response.text();
+      throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
     }
 
+    const result = await response.json();
     return result;
   } catch (error) {
     console.error('Error sending email:', error);
-    return { success: false, message: error.message || 'Error al enviar el mensaje' };
+    throw error;
   }
 }

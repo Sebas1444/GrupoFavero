@@ -2,10 +2,11 @@ import React from 'react';
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import HeaderAs from './HeaderAs';
 import LaEmpresaAs from './LaEmpresaAs';
-import SucursalesAs from './SucursalesAs';
-import ContactoAs from './ContactoAs';
+// import SucursalesAs from './SucursalesAs';
+// import ContactoAs from './ContactoAs';
 import FooterAs from './FooterAs';
 import PostulacionAs from './PostulacionAs';
+
 
 export default function App() {
   const navigate = useNavigate();
