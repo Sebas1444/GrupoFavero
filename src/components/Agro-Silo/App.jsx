@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import HeaderAs from './HeaderAs';
 import LaEmpresaAs from './LaEmpresaAs';
+import NosotrosAs from './NosotrosAs';
 import SucursalesAs from './SucursalesAs';
 import ContactoAs from './ContactoAs';
 import FooterAs from './FooterAs';
@@ -55,14 +56,36 @@ export default function App() {
 
       <main className="flex-grow" style={{ marginTop: `${headerHeight}px` }}>
         <Routes>
-          <Route path="/Agro-Silo" element={<LaEmpresaAs onNavClick={handleNavClick} />} />
+          <Route path="/Agro-Silo" element={
+            <>
+              <LaEmpresaAs onNavClick={handleNavClick} />
+              <div className="mt-[200px]">
+                <NosotrosAs />
+              </div>
+              <div className="mt-[200px]">
+                <SucursalesAs />
+              </div>
+              <ContactoAs />
+            </>
+          } />
           <Route path="/PostulacionAs" element={<PostulacionAs />} />
-          <Route path="*" element={<LaEmpresaAs onNavClick={handleNavClick} />} />
+          <Route path="*" element={
+            <>
+              <LaEmpresaAs onNavClick={handleNavClick} />
+              <div className="mt-[200px]">
+                <NosotrosAs />
+              </div>
+              <div className="mt-[200px]">
+                <SucursalesAs />
+              </div>
+              <div className="mt-[200px]">
+                <ContactoAs />
+              </div>
+              
+            </>
+          } />
         </Routes>
       </main>
-
-      <SucursalesAs />
-      <ContactoAs />
       <FooterAs />
     </div>
   );

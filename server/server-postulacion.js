@@ -4,7 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import multer from 'multer';
+import multer from 'multer'; 
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,7 +16,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// const upload = multer({ dest: 'uploads/' });
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, 'uploads/')); 
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname); 
+  }
+});
+
+const upload = multer({ storage: storage }); 
+
 
 async function sendPostulacionMail({ nombre, apellido, telefono, email, mensaje, cvFile }) {
   console.log('Attempting to create transporter for postulacion...');
@@ -60,11 +71,12 @@ async function sendPostulacionMail({ nombre, apellido, telefono, email, mensaje,
   }
 }
 
+
 app.post('/api/send-postulacion', upload.single('cv'), async (req, res) => {
   console.log('Received postulacion request:', req.body);
 
   const { nombre, apellido, telefono, email, mensaje } = req.body;
-  const cvFile = req.file;
+  const cvFile = req.file; // Aquí se guarda el archivo subido
 
   if (!nombre || !apellido || !telefono || !email || !mensaje || !cvFile) {
     return res.status(400).json({ success: false, message: 'Todos los campos son requeridos' });

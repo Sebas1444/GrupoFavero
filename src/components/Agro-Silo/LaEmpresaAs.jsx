@@ -50,7 +50,7 @@ const LaEmpresaAs = ({ onNavClick, quienesSomosAsRef }) => {
         <div className="container mx-auto px-4 py-16">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="text-white bg-customGreen bg-opacity-80 p-6 rounded-lg">
-              <h1 ref={quienesSomosAsRef} id="quienes-somosAs" className="text-4xl md:text-5xl font-bold mb-6">NOSOTROS</h1>
+              <h1 ref={quienesSomosAsRef} id="quienes-somosAs" className="text-4xl md:text-5xl font-bold mb-6">QUIÉNES SOMOS</h1>
               <p className="text-lg mb-4">
                 <span className="font-bold">Agro Silo Santa Catalina S.A.</span> es la empresa pionera del Grupo Favero, dedicada principalmente a la producción, acopio y comercialización de productos agrícolas, especialmente la soja, así como también maíz, trigo, canola y girasol, a través de los 13 silos que se encuentran distribuidos estratégicamente en la Región Oriental, con infraestructura de recepción de granos, básculas, control de calidad y secaderos.
               </p>

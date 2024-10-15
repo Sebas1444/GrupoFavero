@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 export default function ContactoAs() {
   return (
-    <section id="contactoAs" className="bg-gray-100 py-16">
+    <section id="contactoAs" className="bg-white py-16">
       <h1>CONTACTO</h1>
     </section>
   );
