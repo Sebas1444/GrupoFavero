@@ -6,7 +6,7 @@ const LaEmpresa = React.forwardRef(({ quienesSomosRef }, ref) => {
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div className="text-white">
-            <h1 ref={quienesSomosRef} id="quienes-somos" className="text-4xl md:text-5xl font-bold mb-6">NOSOTROS</h1>
+            <h1 ref={quienesSomosRef} id="quienes-somos" className="text-4xl md:text-5xl font-bold mb-6">QUIÉNES SOMOS</h1>
             <p className="text-lg mb-4">
               El <span className="font-bold">Grupo Favero</span> es un conjunto de empresas que trabajan en el desarrollo de la agricultura, agroindustrias y la ganadería en el Paraguay desde hace cuatro décadas, constituyéndose en la actualidad en uno de los grupos económicos más importantes del sector agropecuario del país.
             </p>

@@ -46,7 +46,7 @@ export default function EmpresasGf() {
   }, [nextSlide, currentIndex]);
 
   return (
-    <section className="bg-white py-32">
+    <section className="bg-gray-100 py-32">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-customBlue mb-16 text-center">NUESTRAS EMPRESAS</h2>
         <div className="relative overflow-hidden">

@@ -9,7 +9,7 @@ const focosRSE = [
     color: "bg-blue-100 text-customBlue"
   },
   {
-    titulo: "MEDIO AMBIENTE",
+    titulo: "GESTIÓN AMBIENTAL",
     descripcion: "Priorizamos los emprendimientos vinculados a la gestión responsable de los residuos generados por nuestras actividades productivas, el uso sostenible de los recursos naturales, el abastecimiento energético de fuentes renovables, y el manejo responsable de los productos fitosanitarios en la producción.",
     icono: Leaf,
     color: "bg-green-100 text-customBlue"
@@ -24,20 +24,20 @@ const focosRSE = [
 
 const accionesRSE = [
   {
-    titulo: "Distribución de suministros",
-    descripcion: "Apoyo a la comunidad con distribución de suministros esenciales",
+    titulo: "EQUIPO COMPROMETIDO",
+    descripcion: "Capacitar permanentemente a nuestros colaboradores",
     imagen: '/img/rse/rse.jpg',
     posicionImagen: 'center 30%'
   },
   {
-    titulo: "Equipo comprometido",
-    descripcion: "Trabajamos con dedicación para mejorar la calidad de vida de quienes enfrentan desafíos de movilidad, enfocados en brindar soluciones que transformen vidas.",
-    imagen: '/img/rse/rse5.jpg',
+    titulo: "INICIATIVAS SUSTENTABLES",
+    descripcion: "Desarrollar programas amigables con el Medio Ambiente",
+    imagen: '/img/rse/rse6.jpeg',
     posicionImagen: 'center center'
   },
   {
-    titulo: "Desarrollo comunitario",
-    descripcion: "Fomentando la participación y el desarrollo comunitario",
+    titulo: "CALIDAD DE VIDA",
+    descripcion: "Apoyar y respetar la protección de los derechos humanos, como el derecho a una infancia feliz",
     imagen: '/img/rse/rse4.jpg',
     posicionImagen: 'center 70%'
   }
@@ -47,7 +47,7 @@ export default function RseGf() {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <section id="rse" className="bg-gradient-to-br from-blue-50 to-white py-16">
+    <section id="rse" className="bg-gradient-to-br bg-gray-100 to-white py-16">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-bold text-customBlue mb-8 text-center">RESPONSABILIDAD SOCIAL EMPRESARIAL</h2>
         
@@ -61,7 +61,7 @@ export default function RseGf() {
         </div>
 
         <div className="mb-16">
-          <h3 className="text-2xl font-semibold text-customBlue mb-8 text-center">Nuestros focos temáticos</h3>
+          <h3 className="text-2xl font-semibold text-customBlue mb-8 text-center">NUESTROS FOCOS TEMÁTICOS</h3>
           <div className="flex flex-wrap justify-center gap-4 mb-8">
             {focosRSE.map((foco, index) => (
               <button
@@ -89,7 +89,7 @@ export default function RseGf() {
         </div>
 
         <div>
-          <h3 className="text-2xl font-semibold text-customBlue mb-8 text-center">Nuestras Acciones</h3>
+          <h3 className="text-2xl font-semibold text-customBlue mb-8 text-center">NUESTRAS ACCIONES</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {accionesRSE.map((accion, index) => (
               <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 transform hover:scale-105">

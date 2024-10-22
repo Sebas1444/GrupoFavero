@@ -29,64 +29,53 @@ export default function App() {
   const handleNavClick = (href) => {
     if (href.startsWith('/Agro-Silo/#')) {
       const id = href.split('#')[1];
-      if (location.pathname !== '/Agro-Silo') {
-        navigate('/Agro-Silo');
-        setTimeout(() => {
-          const element = document.getElementById(id);
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-          }
-        }, 100);
-      } else {
+      navigate('/Agro-Silo');
+      setTimeout(() => {
         const element = document.getElementById(id);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+          const yOffset = -headerHeight;
+          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
         }
-      }
-    } else if (href.startsWith('/Agro-Silo/')) {
-      navigate(href);
+      }, 100);
     } else {
-      window.location.href = href;
+      navigate(href);
     }
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gray-100">
       <HeaderAs onNavClick={handleNavClick} />
 
       <main className="flex-grow" style={{ marginTop: `${headerHeight}px` }}>
         <Routes>
-          <Route path="/Agro-Silo" element={
-            <>
-              <LaEmpresaAs onNavClick={handleNavClick} />
-              <div className="mt-[200px]">
-                <NosotrosAs />
-              </div>
-              <div className="mt-[200px]">
-                <SucursalesAs />
-              </div>
-              <ContactoAs />
-            </>
-          } />
+          <Route path="/Agro-Silo" element={<MainContent onNavClick={handleNavClick} />} />
           <Route path="/PostulacionAs" element={<PostulacionAs />} />
-          <Route path="*" element={
-            <>
-              <LaEmpresaAs onNavClick={handleNavClick} />
-              <div className="mt-[200px]">
-                <NosotrosAs />
-              </div>
-              <div className="mt-[200px]">
-                <SucursalesAs />
-              </div>
-              <div className="mt-[200px]">
-                <ContactoAs />
-              </div>
-              
-            </>
-          } />
+          <Route path="*" element={<MainContent onNavClick={handleNavClick} />} />
         </Routes>
       </main>
       <FooterAs />
     </div>
+  );
+}
+
+function MainContent({ onNavClick }) {
+  return (
+    <>
+      <LaEmpresaAs onNavClick={onNavClick} />
+      <div className="container mx-auto px-4">
+        <div className="space-y-32">
+          <section className="py-16" id="nosotrosAs">
+            <NosotrosAs />
+          </section>
+          <section className="py-16"  id="nuestras-sucursalesAs">
+            <SucursalesAs />
+          </section>
+          <section className="py-16" id="contactoAs">
+            <ContactoAs />
+          </section>
+        </div>
+      </div>
+    </>
   );
 }
