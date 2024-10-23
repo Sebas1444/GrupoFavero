@@ -3,9 +3,8 @@ import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const navItems = [
-  { name: "QUIÉNES SOMOS", href: "/Agro-Silo/#quienes-somosAs" },
   { name: "NOSOTROS", href: "/Agro-Silo/#nosotrosAs" },
-  { name: "NOSOTROS", href: "/Agro-Silo/SolucionesAs" },
+  { name: "SOLUCIONES", href: "/Agro-Silo/SolucionesAs" },
   { name: "NUESTRAS SUCURSALES", href: "/Agro-Silo/#nuestras-sucursalesAs" },
   { name: "CONTÁCTENOS", href: "/Agro-Silo/#contactoAs" },
   { name: "TRABAJA CON NOSOTROS", href: "/Agro-Silo/PostulacionAs" },

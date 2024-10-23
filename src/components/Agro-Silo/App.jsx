@@ -3,6 +3,7 @@ import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import HeaderAs from './HeaderAs';
 import LaEmpresaAs from './LaEmpresaAs';
 import NosotrosAs from './NosotrosAs';
+import SolucionesAs from './SolucionesAs';
 import SucursalesAs from './SucursalesAs';
 import ContactoAs from './ContactoAs';
 import FooterAs from './FooterAs';
@@ -51,6 +52,7 @@ export default function App() {
         <Routes>
           <Route path="/Agro-Silo" element={<MainContent onNavClick={handleNavClick} />} />
           <Route path="/PostulacionAs" element={<PostulacionAs />} />
+          <Route path="/SolucionesAs" element={<SolucionesAs />} />
           <Route path="*" element={<MainContent onNavClick={handleNavClick} />} />
         </Routes>
       </main>
