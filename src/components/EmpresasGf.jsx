@@ -8,7 +8,7 @@ const empresas = [
   { nombre: "Ganadera Forestal Santa Catalina", logo: "/img/logo/logo-santacatalina.png?height=150&width=150", link: "/Santa-Catalina" },
   { nombre: "Aktra", logo: "/img/logo/logo-aktra.png?height=150&width=150", link: "/Aktra" },
   { nombre: "Semillas Veronica", logo: "/img/logo/logo-veronica.png?height=150&width=150", link: "/Semillas-Veronica" },
-  { nombre: "Ganadera Campobello", logo: "/img/logo/logo-campobello.png?height=150&width=150", link: "/Campobello" },
+  { nombre: "Ganadera Campobello", logo: "/img/logo/logo-campobello.png?height=150&width=150", link: "/Gcampobello" },
   { nombre: "Totemsa", logo: "/img/logo/logo-totemsa.png?height=150&width=150", link: "/Totemsa" },
   { nombre: "Espigon", logo: "/img/logo/logo-espigon.png?height=150&width=150", link: "/Espigon" },
   { nombre: "New Holland", logo: "/img/logo/logo-newholland.png?height=150&width=150", link: "/New-Holland" },

@@ -76,7 +76,7 @@ export default function SolucionesAs() {
               <div>
                 <img src="/img/pindo.jpg" alt="              Nuestros servicios para el almacenamiento y procesamiento de granos." className="w-full h-40 object-cover rounded-md mb-2" />
                 <button
-                  // onClick={() => handleExternalLink('https://aktra.com.py')}
+                  href="/Agro-Silo/AcopioAs"
                   className="w-full bg-customGreen text-white py-2 rounded hover:bg-green-700 transition duration-300"
                 >
                   ACOPIO
@@ -85,7 +85,7 @@ export default function SolucionesAs() {
               <div>
                 <img src="/img/silo.jpg" alt="Semillas" className="w-full h-40 object-cover rounded-md mb-2" />
                 <button
-                  // onClick={() => handleExternalLink('https://semillasveronica.com.py')}
+                  href="/Agro-Silo/GranosAs"
                   className="w-full bg-customGreen text-white py-2 rounded hover:bg-green-700 transition duration-300"
                 >
                   PROCESAMIENTO DE GRANOS

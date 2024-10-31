@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const sucursales = [
   { id: 1, nombre: "Grupo Favero", lat: -25.252454009804826, lng: -57.512842292365505, direccion: "Casa Matriz Asunción", telefono: "(021) 646 284 / 645 931" },
@@ -23,8 +23,6 @@ const sucursales = [
 ];
 
 export default function SucursalesAs() {
-  const [sucursalSeleccionada, setSucursalSeleccionada] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
   const listRef = useRef(null);
   const mapRef = useRef(null);
 
@@ -41,27 +39,9 @@ export default function SucursalesAs() {
     return () => window.removeEventListener('resize', adjustMapHeight);
   }, []);
 
-  useEffect(() => {
-    let timer;
-    if (modalVisible) {
-      timer = setTimeout(() => {
-        setModalVisible(false);
-        setSucursalSeleccionada(null);
-      }, 10000);
-    }
-    return () => clearTimeout(timer);
-  }, [modalVisible]);
-
   const handleSucursalClick = (sucursal) => {
-    setSucursalSeleccionada(sucursal);
-    setModalVisible(true);
-  };
-
-  const handleUbicacionClick = () => {
-    if (sucursalSeleccionada) {
-      const { lat, lng } = sucursalSeleccionada;
-      window.open(`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`, '_blank');
-    }
+    const { lat, lng } = sucursal;
+    window.open(`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`, '_blank');
   };
 
   return (
@@ -94,27 +74,6 @@ export default function SucursalesAs() {
           </div>
         </div>
       </div>
-      {modalVisible && sucursalSeleccionada && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-          <div className="bg-white p-6 rounded-lg max-w-md w-full">
-            <h3 className="text-xl font-bold mb-2">{sucursalSeleccionada.nombre}</h3>
-            <p>{sucursalSeleccionada.direccion}</p>
-            <p>Teléfono: {sucursalSeleccionada.telefono}</p>
-            <button 
-              className="mt-4 bg-customGreen text-white py-2 px-4 rounded hover:bg-green-600 transition-colors duration-200"
-              onClick={handleUbicacionClick}
-            >
-              Ver ubicación en Google Maps
-            </button>
-            <button 
-              className="mt-4 ml-4 bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400 transition-colors duration-200"
-              onClick={() => setModalVisible(false)}
-            >
-              Cerrar
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

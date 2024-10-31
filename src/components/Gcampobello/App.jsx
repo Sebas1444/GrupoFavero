@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
-import HeaderAs from './HeaderAs';
-import LaEmpresaAs from './LaEmpresaAs';
-import NosotrosAs from './NosotrosAs';
-import SolucionesAs from './SolucionesAs';
-import SucursalesAs from './SucursalesAs';
-import ContactoAs from './ContactoAs';
-import FooterAs from './FooterAs';
-import PostulacionAs from './PostulacionAs';
-import AcopioAs from './AcopioAs';
-import GranosAs from './GranosAs';
+import HeaderGc from './HeaderGc';
+import LaEmpresaGc from './LaEmpresaGc';
+// import NosotrosGc from './NosotrosGc';
+// import ContactoGc from './ContactoGc';
+// import FooterGc from './FooterGc';
+// import PostulacionGc from './PostulacionGc';
+
 
 export default function App() {
   const navigate = useNavigate();
@@ -30,9 +27,9 @@ export default function App() {
   }, []);
 
   const handleNavClick = (href) => {
-    if (href.startsWith('/Agro-Silo/#')) {
+    if (href.startsWith('/Gcampobello/#')) {
       const id = href.split('#')[1];
-      navigate('/Agro-Silo');
+      navigate('/Gcampobello');
       setTimeout(() => {
         const element = document.getElementById(id);
         if (element) {
@@ -48,19 +45,16 @@ export default function App() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
-      <HeaderAs onNavClick={handleNavClick} />
+      <HeaderGc onNavClick={handleNavClick} />
 
       <main className="flex-grow" style={{ marginTop: `${headerHeight}px` }}>
         <Routes>
-          <Route path="/Agro-Silo" element={<MainContent onNavClick={handleNavClick} />} />
-          <Route path="/PostulacionAs" element={<PostulacionAs />} />
-          <Route path="/SolucionesAs" element={<SolucionesAs />} />
-          <Route path="/AcopioAs" element={<AcopioAs />} />
-          <Route path="/GranosAs" element={<GranosAs />} />
+          <Route path="/Gcampobello" element={<MainContent onNavClick={handleNavClick} />} />
+          {/* <Route path="/PostulacionGc" element={<PostulacionGc />} /> */}
           <Route path="*" element={<MainContent onNavClick={handleNavClick} />} />
         </Routes>
       </main>
-      <FooterAs />
+      <FooterGc />
     </div>
   );
 }
@@ -68,20 +62,17 @@ export default function App() {
 function MainContent({ onNavClick }) {
   return (
     <>
-      <LaEmpresaAs onNavClick={onNavClick} />
-      <div className="container mx-auto px-4">
+      <LaEmpresaGc onNavClick={onNavClick} />
+      {/* <div className="container mx-auto px-4">
         <div className="space-y-32">
-          <section className="py-16" id="nosotrosAs">
-            <NosotrosAs />
+          <section className="py-16" id="nosotrosGc">
+            <NosotrosGc />
           </section>
-          <section className="py-16"  id="nuestras-sucursalesAs">
-            <SucursalesAs />
-          </section>
-          <section className="py-16" id="contactoAs">
-            <ContactoAs />
+          <section className="py-16" id="contactoGc">
+            <ContactoGc />
           </section>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
