@@ -7,6 +7,7 @@ import RseGf from "./components/RseGf";
 import ContactoGf from "./components/ContactoGf";
 import FooterGf from "./components/FooterGf";
 import AgroSiloApp from "./components/Agro-Silo/App";
+import GcampobelloApp from "./components/Gcampobello/App";
 import PostulacionGf from "./components/PostulacionGf";
 
 function MainApp() {
@@ -67,6 +68,7 @@ export function App() {
     <Routes>
       <Route path="/" element={<MainApp />} />
       <Route path="/Agro-Silo/*" element={<AgroSiloApp />} />
+      <Route path="/Gcampobello/*" element={<GcampobelloApp />} />
       <Route path="/PostulacionGf" element={<PostulacionGf />} />
     </Routes>
   );

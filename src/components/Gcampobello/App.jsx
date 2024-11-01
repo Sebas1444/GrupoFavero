@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import HeaderGc from './HeaderGc';
 import LaEmpresaGc from './LaEmpresaGc';
-// import NosotrosGc from './NosotrosGc';
-// import ContactoGc from './ContactoGc';
-// import FooterGc from './FooterGc';
-// import PostulacionGc from './PostulacionGc';
+import NosotrosGc from './NosotrosGc';
+import ContactoGc from './ContactoGc';
+import FooterGc from './FooterGc';
+import PostulacionGc from './PostulacionGc';
 
 
 export default function App() {
@@ -50,7 +50,7 @@ export default function App() {
       <main className="flex-grow" style={{ marginTop: `${headerHeight}px` }}>
         <Routes>
           <Route path="/Gcampobello" element={<MainContent onNavClick={handleNavClick} />} />
-          {/* <Route path="/PostulacionGc" element={<PostulacionGc />} /> */}
+          <Route path="/PostulacionGc" element={<PostulacionGc />} />
           <Route path="*" element={<MainContent onNavClick={handleNavClick} />} />
         </Routes>
       </main>
@@ -63,7 +63,7 @@ function MainContent({ onNavClick }) {
   return (
     <>
       <LaEmpresaGc onNavClick={onNavClick} />
-      {/* <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4">
         <div className="space-y-32">
           <section className="py-16" id="nosotrosGc">
             <NosotrosGc />
@@ -72,7 +72,7 @@ function MainContent({ onNavClick }) {
             <ContactoGc />
           </section>
         </div>
-      </div> */}
+      </div> 
     </>
   );
 }
