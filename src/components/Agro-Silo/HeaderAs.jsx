@@ -31,7 +31,7 @@ const HeaderAs = forwardRef(({ onNavClick }, ref) => {
 
   const handleLogoClick = (e) => {
     e.preventDefault();
-    onNavClick('/Agro-Silo/');
+    window.location.href = '/Agro-Silo/';
   };
 
   return (
@@ -50,7 +50,11 @@ const HeaderAs = forwardRef(({ onNavClick }, ref) => {
           <div className="container mx-auto px-4">
             <div className="flex justify-between items-center">
               <a href="/Agro-Silo/" onClick={handleLogoClick} className="flex items-center space-x-2">
-                <img src='/img/AgroSilo2.png' alt="Agro Silo Logo" className={`transition-all duration-300 ${isScrolled ? 'h-10' : 'h-12'} w-auto`} loading="eager" />
+                {isScrolled ? (
+                  <img src='/img/AgroSilo2.png' alt="Agro Silo Logo" className="h-10 w-auto transition-all duration-300" loading="eager" />
+                ) : (
+                  <img src='/img/AgroSilo2.png' alt="Agro Silo Logo" className="h-12 w-auto transition-all duration-300" loading="eager" />
+                )}
               </a>
               
               <div className="hidden md:flex space-x-6">

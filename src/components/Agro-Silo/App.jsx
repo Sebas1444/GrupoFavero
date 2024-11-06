@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import HeaderAs from './HeaderAs';
 import LaEmpresaAs from './LaEmpresaAs';
@@ -12,45 +12,75 @@ import AcopioAs from './AcopioAs';
 import GranosAs from './GranosAs';
 
 export default function App() {
+  const headerRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
   const [headerHeight, setHeaderHeight] = useState(0);
 
   useEffect(() => {
     const updateHeaderHeight = () => {
-      const header = document.querySelector('header');
-      if (header) {
-        setHeaderHeight(header.offsetHeight);
+      if (headerRef.current) {
+        setHeaderHeight(headerRef.current.offsetHeight);
       }
     };
 
     updateHeaderHeight();
     window.addEventListener('resize', updateHeaderHeight);
+
     return () => window.removeEventListener('resize', updateHeaderHeight);
   }, []);
 
-  const handleNavClick = (href) => {
-    if (href.startsWith('/Agro-Silo/#')) {
-      const id = href.split('#')[1];
-      navigate('/Agro-Silo');
-      setTimeout(() => {
-        const element = document.getElementById(id);
-        if (element) {
-          const yOffset = -headerHeight;
-          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-          window.scrollTo({ top: y, behavior: 'smooth' });
-        }
-      }, 100);
-    } else {
-      navigate(href);
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const yOffset = -headerHeight;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
 
+  const handleNavClick = (href) => {
+    if (href.startsWith('/Agro-Silo/')) {
+      navigate(href);
+    } else if (href.startsWith('#')) {
+      scrollToSection(href.substring(1));
+    }
+  };
+  
+  useEffect(() => {
+    if (location.hash) {
+      setTimeout(() => {
+        scrollToSection(location.hash.substring(1));
+      }, 0);
+    }
+  }, [location, headerHeight]);
+
+  function MainContent({ onNavClick }) {
+    return (
+      <>
+        <LaEmpresaAs onNavClick={onNavClick} />
+        <div className="container mx-auto px-4">
+          <div className="space-y-32">
+            <section className="py-16" id="nosotrosAs">
+              <NosotrosAs />
+            </section>
+            <section className="py-16"  id="nuestras-sucursalesAs">
+              <SucursalesAs />
+            </section>
+            <section className="py-16" id="contactoAs">
+              <ContactoAs />
+            </section>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
-      <HeaderAs onNavClick={handleNavClick} />
+      <HeaderAs ref={headerRef} onNavClick={handleNavClick} />
 
-      <main className="flex-grow" style={{ marginTop: `${headerHeight}px` }}>
+      <main className="flex-grow" style={{ paddingTop: `${headerHeight}px` }}>
         <Routes>
           <Route path="/Agro-Silo" element={<MainContent onNavClick={handleNavClick} />} />
           <Route path="/PostulacionAs" element={<PostulacionAs />} />
@@ -62,26 +92,5 @@ export default function App() {
       </main>
       <FooterAs />
     </div>
-  );
-}
-
-function MainContent({ onNavClick }) {
-  return (
-    <>
-      <LaEmpresaAs onNavClick={onNavClick} />
-      <div className="container mx-auto px-4">
-        <div className="space-y-32">
-          <section className="py-16" id="nosotrosAs">
-            <NosotrosAs />
-          </section>
-          <section className="py-16"  id="nuestras-sucursalesAs">
-            <SucursalesAs />
-          </section>
-          <section className="py-16" id="contactoAs">
-            <ContactoAs />
-          </section>
-        </div>
-      </div>
-    </>
   );
 }

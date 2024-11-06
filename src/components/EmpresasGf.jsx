@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const empresas = [
@@ -45,6 +44,10 @@ export default function EmpresasGf() {
     return () => clearInterval(intervalId);
   }, [nextSlide, currentIndex]);
 
+  const handleEmpresaClick = (link) => {
+    window.location.href = link;
+  };
+
   return (
     <section className="bg-gray-100 py-32">
       <div className="container mx-auto px-4">
@@ -60,13 +63,17 @@ export default function EmpresasGf() {
                   <div key={index} className={`${isMobile ? 'w-full' : 'w-1/3'} px-2`}>
                     <div className="bg-gray-100 rounded-2xl p-2 w-40 h-40 mx-auto flex flex-col items-center justify-center transition-transform duration-300 hover:scale-105 hover:shadow-lg">
                       <div className="w-36 h-36 flex items-center justify-center relative">
-                        <Link 
-                          to={empresa.link} 
+                        <a 
+                          href={empresa.link}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleEmpresaClick(empresa.link);
+                          }}
                           className="block w-full h-full transition-transform duration-300 hover:scale-110"
                           aria-label={`Visitar página de ${empresa.nombre}`}
                         >
                           <img src={empresa.logo} alt={empresa.nombre} className="max-w-full max-h-full object-contain" />
-                        </Link>
+                        </a>
                       </div>
                     </div>
                     <p className="text-center text-sm font-bold text-customBlue mt-2">{empresa.nombre}</p>
