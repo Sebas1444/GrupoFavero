@@ -1,6 +1,6 @@
 import React, { useState, forwardRef, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const navItems = [
   { name: "NOSOTROS", href: "/Agro-Silo/#nosotrosAs" },
@@ -13,6 +13,8 @@ const navItems = [
 const HeaderAs = forwardRef(({ onNavClick }, ref) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,9 +25,19 @@ const HeaderAs = forwardRef(({ onNavClick }, ref) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (location.pathname === '/Agro-Silo/SolucionesAs') {
+      window.scrollTo(0, 0);
+    }
+  }, [location]);
+
   const handleNavClick = (e, href) => {
     e.preventDefault();
-    onNavClick(href);
+    if (href === '/Agro-Silo/SolucionesAs') {
+      navigate(href);
+    } else {
+      onNavClick(href);
+    }
     setIsMenuOpen(false);
   };
 
@@ -51,8 +63,10 @@ const HeaderAs = forwardRef(({ onNavClick }, ref) => {
             <div className="flex justify-between items-center">
               <a href="/Agro-Silo/" onClick={handleLogoClick} className="flex items-center space-x-2">
                 {isScrolled ? (
+                  //Cuando el header está scrolleado
                   <img src='/img/AgroSilo2.png' alt="Agro Silo Logo" className="h-10 w-auto transition-all duration-300" loading="eager" />
                 ) : (
+                  //Cuando el header está quieto
                   <img src='/img/AgroSilo2.png' alt="Agro Silo Logo" className="h-12 w-auto transition-all duration-300" loading="eager" />
                 )}
               </a>

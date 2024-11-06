@@ -46,7 +46,13 @@ const HeaderGf = forwardRef(({ onNavClick }, ref) => {
           <div className="container mx-auto px-4">
             <div className="flex justify-between items-center">
               <a href="/" onClick={handleLogoClick} className="flex items-center space-x-2">
-                <img src='/img/GrupoFavero.png' alt="Grupo Favero Logo" className={`transition-all duration-300 ${isScrolled ? 'h-10' : 'h-12'} w-auto`} loading="eager" />
+              {isScrolled ? (
+                  //Cuando el header está scrolleado
+                  <img src='/img/GrupoFavero.png' alt="Agro Silo Logo" className="h-10 w-auto transition-all duration-300" loading="eager" />
+                ) : (
+                  //Cuando el header está quieto
+                  <img src='/img/GrupoFavero.png' alt="Agro Silo Logo" className="h-12 w-auto transition-all duration-300" loading="eager" />
+                )}
               </a>
               
               <div className="hidden md:flex space-x-6">
