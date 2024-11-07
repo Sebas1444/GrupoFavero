@@ -95,6 +95,8 @@ app.post('/api/send-postulacion', upload.single('cv'), async (req, res) => {
 const PORT = process.env.POSTULACION_PORT || 3050;
 app.listen(PORT, () => {
   console.log(`Servidor de postulación corriendo en http://localhost:${PORT}`);
+  //SERVER
+  //console.log(`Servidor de postulación corriendo en http://192.168.60.244:${PORT}`);
   console.log('EMAIL_USER:', process.env.EMAIL_USER);
   console.log('EMAIL_PASS:', process.env.EMAIL_PASS ? '******' : 'Not set');
 });
