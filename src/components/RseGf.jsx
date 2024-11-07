@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Book, Leaf, Users, ChevronRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Book, Leaf, Users, ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 const focosRSE = [
   {
@@ -22,29 +22,51 @@ const focosRSE = [
   }
 ];
 
-const accionesRSE = [
-  {
-    titulo: "EQUIPO COMPROMETIDO",
-    descripcion: "Capacitar permanentemente a nuestros colaboradores",
-    imagen: '/img/rse/rse.jpg',
-    posicionImagen: 'center 30%'
-  },
-  {
-    titulo: "INICIATIVAS SUSTENTABLES",
-    descripcion: "Desarrollar programas amigables con el Medio Ambiente",
-    imagen: '/img/rse/rse6.jpeg',
-    posicionImagen: 'center center'
-  },
-  {
-    titulo: "CALIDAD DE VIDA",
-    descripcion: "Apoyar y respetar la protección de los derechos humanos, como el derecho a una infancia feliz",
-    imagen: '/img/rse/rse4.jpg',
-    posicionImagen: 'center 70%'
-  }
-];
-
 export default function RseGf() {
   const [activeTab, setActiveTab] = useState(0);
+  const [accionesRSE, setAccionesRSE] = useState([]);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedAccion, setSelectedAccion] = useState(null);
+
+  useEffect(() => {
+    const loadAcciones = () => {
+      const savedAcciones = localStorage.getItem('accionesRSE');
+      if (savedAcciones) {
+        setAccionesRSE(JSON.parse(savedAcciones));
+      }
+    };
+
+    loadAcciones();
+
+    const checkForUpdates = setInterval(() => {
+      const lastSyncTime = localStorage.getItem('lastSyncTime');
+      if (lastSyncTime && new Date(lastSyncTime) > new Date(localStorage.getItem('lastLoadTime'))) {
+        loadAcciones();
+        localStorage.setItem('lastLoadTime', new Date().toISOString());
+      }
+    }, 5000); // Verifica cada 5 segundos
+
+    return () => clearInterval(checkForUpdates);
+  }, []);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % Math.ceil(accionesRSE.length / 3));
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + Math.ceil(accionesRSE.length / 3)) % Math.ceil(accionesRSE.length / 3));
+  };
+
+  const openModal = (accion) => {
+    setSelectedAccion(accion);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setSelectedAccion(null);
+  };
 
   return (
     <section id="rse" className="bg-gradient-to-br bg-gray-100 to-white py-16">
@@ -90,30 +112,83 @@ export default function RseGf() {
 
         <div>
           <h3 className="text-2xl font-semibold text-customBlue mb-8 text-center">NUESTRAS ACCIONES</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {accionesRSE.map((accion, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 transform hover:scale-105">
-                <div className="h-48 sm:h-64 md:h-48 lg:h-64 overflow-hidden">
-                  <img 
-                    src={accion.imagen} 
-                    alt={accion.titulo} 
-                    className="w-full h-full object-cover transition-all duration-300"
-                    style={{ 
-                      objectPosition: accion.posicionImagen,
-                      transform: index === 0 ? 'scale(1.2) translateY(-10%)' : 'none',
-                    }}
-                  />
-                </div>
-                <div className="p-4">
-                  <h5 className="text-lg font-semibold text-customBlue mb-2">{accion.titulo}</h5>
-                  <p className="text-gray-600">{accion.descripcion}</p>
-                </div>
+          <div className="relative">
+            <div className="overflow-hidden">
+              <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
+                {Array.from({ length: Math.ceil(accionesRSE.length / 3) }).map((_, index) => (
+                  <div key={index} className="w-full flex-shrink-0">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                      {accionesRSE.slice(index * 3, (index + 1) * 3).map((accion, accionIndex) => (
+                        <div key={accionIndex} className="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 transform hover:scale-105 cursor-pointer group" onClick={() => openModal(accion)}>
+                          <div className="relative h-48 sm:h-64 md:h-48 lg:h-64 overflow-hidden">
+                            <img 
+                              src={accion.imagen} 
+                              alt={accion.titulo} 
+                              className="absolute w-full h-full object-cover transition-all duration-300 group-hover:scale-110"
+                              style={{ 
+                                objectPosition: `${accion.posicionImagen.x}% ${accion.posicionImagen.y}%`
+                              }}
+                            />
+                            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300"></div>
+                          </div>
+                          <div className="p-4">
+                            <h5 className="text-lg font-semibold text-customBlue mb-2">{accion.titulo}</h5>
+                            <p className="text-gray-600">{accion.descripcion}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+            {accionesRSE.length > 3 && (
+              <>
+                <button 
+                  onClick={prevSlide} 
+                  className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors"
+                  aria-label="Anterior"
+                >
+                  <ChevronLeft className="w-6 h-6 text-customBlue" />
+                </button>
+                <button 
+                  onClick={nextSlide} 
+                  className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors"
+                  aria-label="Siguiente"
+                >
+                  <ChevronRight className="w-6 h-6 text-customBlue" />
+                </button>
+              </>
+            )}
           </div>
         </div>
-
       </div>
+
+      {modalOpen && selectedAccion && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm">
+          <div className="bg-white rounded-lg p-8 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-start mb-4">
+              <h3 className="text-2xl font-bold text-customBlue">{selectedAccion.titulo}</h3>
+              <button onClick={closeModal} className="text-gray-500 hover:text-gray-700">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <div className="relative w-full h-64 mb-4">
+              <img 
+                src={selectedAccion.imagen} 
+                alt={selectedAccion.titulo} 
+                className="absolute w-full h-full object-cover rounded"
+                style={{ 
+                  objectPosition: `${selectedAccion.posicionImagen.x}% ${selectedAccion.posicionImagen.y}%`
+                }}
+              />
+            </div>
+            <p className="text-gray-700 mb-4">{selectedAccion.descripcion}</p>
+            <h4 className="text-xl font-semibold text-customBlue mb-2">Descripción Detallada</h4>
+            <p className="text-gray-700">{selectedAccion.descripcionDetallada}</p>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

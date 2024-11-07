@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from 'react';
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import React, { useRef, useEffect, useState } from 'react';
+import { Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import HeaderGf from "./components/HeaderGf";
 import LaEmpresaGf from "./components/LaEmpresaGf";
 import EmpresasGf from "./components/EmpresasGf";
@@ -9,6 +9,8 @@ import FooterGf from "./components/FooterGf";
 import AgroSiloApp from "./components/Agro-Silo/App";
 import GcampobelloApp from "./components/Gcampobello/App";
 import PostulacionGf from "./components/PostulacionGf";
+import AdminRSE from "./components/AdminRSE";
+import LoginAdmin from "./components/LoginAdmin";
 
 function MainApp() {
   const headerRef = useRef(null);
@@ -63,6 +65,29 @@ function MainApp() {
   );
 }
 
+function ProtectedRoute({ children }) {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem('adminToken');
+    if (token) {
+      setIsAuthenticated(true);
+    }
+    setIsLoading(false);
+  }, []);
+
+  if (isLoading) {
+    return <div>Cargando...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/admin/login" replace />;
+  }
+
+  return children;
+}
+
 export function App() {
   return (
     <Routes>
@@ -70,6 +95,15 @@ export function App() {
       <Route path="/Agro-Silo/*" element={<AgroSiloApp />} />
       <Route path="/Gcampobello/*" element={<GcampobelloApp />} />
       <Route path="/PostulacionGf" element={<PostulacionGf />} />
+      <Route path="/admin/login" element={<LoginAdmin />} />
+      <Route 
+        path="/admin/rse" 
+        element={
+          <ProtectedRoute>
+            <AdminRSE />
+          </ProtectedRoute>
+        } 
+      />
     </Routes>
   );
 }
