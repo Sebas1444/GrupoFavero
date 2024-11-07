@@ -67,7 +67,7 @@ const HeaderAs = forwardRef(({ onNavClick }, ref) => {
                   <img src='/img/AgroSilo2.png' alt="Agro Silo Logo" className="h-10 w-auto transition-all duration-300" loading="eager" />
                 ) : (
                   //Cuando el header está quieto
-                  <img src='/img/LOGO-AGRO-SILO.png' alt="Agro Silo Logo" className="h-12 w-auto transition-all duration-300" loading="eager" />
+                  <img src='/img/Agro-silo173-105-px.png' alt="Agro Silo Logo" className="h-12 w-auto transition-all duration-300" loading="eager" />
                 )}
               </a>
               

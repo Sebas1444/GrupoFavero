@@ -51,7 +51,7 @@ const HeaderGf = forwardRef(({ onNavClick }, ref) => {
                   <img src='/img/GrupoFavero.png' alt="Agro Silo Logo" className="h-10 w-auto transition-all duration-300" loading="eager" />
                 ) : (
                   //Cuando el header está quieto
-                  <img src='/img/LOGO-GF.png' alt="Agro Silo Logo" className="h-12 w-auto transition-all duration-300" loading="eager" />
+                  <img src='/img/LogoGF22.png' alt="Agro Silo Logo" className="h-12 w-auto transition-all duration-300" loading="eager" />
                 )}
               </a>
               
