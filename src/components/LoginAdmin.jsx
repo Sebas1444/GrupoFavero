@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const LoginAdmin = () => {
   const [username, setUsername] = useState('');
@@ -7,24 +8,20 @@ const LoginAdmin = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = localStorage.getItem('adminToken');
-    if (token) {
-      navigate('/admin/rse');
-    }
-  }, [navigate]);
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Intento de inicio de sesión:', { username, password }); // Información de depuración
-
-    if (username === 'admin' && password === 'password') {
-      console.log('Inicio de sesión exitoso'); // Información de depuración
-      localStorage.setItem('adminToken', 'dummy-token');
-      navigate('/admin/rse');
-    } else {
-      console.log('Inicio de sesión fallido'); // Información de depuración
-      setError('Credenciales inválidas');
+    setError('');
+    try {
+      const response = await axios.post('/api/auth/login', { username, password });
+      if (response.data.token) {
+        localStorage.setItem('adminToken', response.data.token);
+        navigate('/admin/rse');
+      } else {
+        setError('Credenciales inválidas');
+      }
+    } catch (error) {
+      console.error('Error al iniciar sesión:', error);
+      setError('Error al iniciar sesión. Por favor, intente nuevamente.');
     }
   };
 
