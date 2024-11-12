@@ -30,22 +30,23 @@ export default function RseGf() {
   const [selectedAccion, setSelectedAccion] = useState(null);
 
   useEffect(() => {
-    const loadAcciones = () => {
-      const savedAcciones = localStorage.getItem('accionesRSE');
-      if (savedAcciones) {
-        setAccionesRSE(JSON.parse(savedAcciones));
+    const loadAcciones = async () => {
+      try {
+        const response = await fetch('/api/acciones');
+        if (response.ok) {
+          const data = await response.json();
+          setAccionesRSE(data);
+        } else {
+          console.error('Failed to load acciones');
+        }
+      } catch (error) {
+        console.error('Error loading acciones:', error);
       }
     };
 
     loadAcciones();
 
-    const checkForUpdates = setInterval(() => {
-      const lastSyncTime = localStorage.getItem('lastSyncTime');
-      if (lastSyncTime && new Date(lastSyncTime) > new Date(localStorage.getItem('lastLoadTime'))) {
-        loadAcciones();
-        localStorage.setItem('lastLoadTime', new Date().toISOString());
-      }
-    }, 5000); // Verifica cada 5 segundos
+    const checkForUpdates = setInterval(loadAcciones, 5000); // Verifica cada 5 segundos
 
     return () => clearInterval(checkForUpdates);
   }, []);

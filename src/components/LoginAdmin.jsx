@@ -5,35 +5,28 @@ const LoginAdmin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
     if (token) {
-      setIsAuthenticated(true);
       navigate('/admin/rse');
     }
   }, [navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Login attempt:', { username, password }); // Debugging information
+    console.log('Intento de inicio de sesión:', { username, password }); // Información de depuración
 
     if (username === 'admin' && password === 'password') {
-      console.log('Login successful'); // Debugging information
+      console.log('Inicio de sesión exitoso'); // Información de depuración
       localStorage.setItem('adminToken', 'dummy-token');
-      setIsAuthenticated(true);
       navigate('/admin/rse');
     } else {
-      console.log('Login failed'); // Debugging information
+      console.log('Inicio de sesión fallido'); // Información de depuración
       setError('Credenciales inválidas');
     }
   };
-
-  if (isAuthenticated) {
-    return <div>Redirigiendo al panel de administración...</div>;
-  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
