@@ -1,5 +1,5 @@
 import express from 'express';
-import Accion from '../models/Accion.js';
+import Accion from '../api/models/Accion.js';
 
 const router = express.Router();
 

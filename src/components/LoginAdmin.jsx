@@ -15,7 +15,7 @@ const LoginAdmin = () => {
       const response = await axios.post('/api/auth/login', { username, password });
       if (response.data.token) {
         localStorage.setItem('adminToken', response.data.token);
-        navigate('/admin/rse');
+        navigate('/admin/rse'); 
       } else {
         setError('Credenciales inválidas');
       }

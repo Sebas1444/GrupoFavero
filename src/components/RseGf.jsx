@@ -32,7 +32,7 @@ export default function RseGf() {
   useEffect(() => {
     const loadAcciones = async () => {
       try {
-        const response = await fetch('/api/acciones');
+        const response = await fetch('/api-rse/acciones');
         if (response.ok) {
           const data = await response.json();
           setAccionesRSE(data);

@@ -7,10 +7,15 @@ export default defineConfig({
     // host: '192.168.60.244',
     // port: 5173,
     proxy: {
-      '/api': {
+     '/api': {
         target: 'http://localhost:3000',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
+      },
+      '/api-rse': {
+        target: 'http://localhost:4000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api-rse/, '/api')
       },
       '/postulacion': {
         target: 'http://localhost:3050',

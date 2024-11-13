@@ -4,14 +4,14 @@ const nextConfig = {
   swcMinify: true,
   images: {
     domains: ['localhost'],
-    // domains: ['192.168.60.244'],
+    //domains: ['192.168.60.244'],
   },
   async rewrites() {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://localhost:5173/api/:path*',
-        //destination: 'http://192.168.60.244:5173/api/:path*',
+        destination: 'http://localhost:4000/api/:path*', // Cambiado a puerto 4000
+        //destination: 'http://192.168.60.244:4000/api/:path*', 
       },
     ];
   },

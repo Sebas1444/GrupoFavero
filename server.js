@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import { connectDB } from './api/connectDB.js';
-import accionesRoutes from './api/routes/acciones.js';
+import { connectDB } from './server/connectDB.js';
+import accionesRoutes from './api-rse/acciones.js';
 import authRoutes from './api/routes/auth.js';
 
 const app = express();
@@ -14,9 +14,9 @@ app.use(express.json());
 connectDB();
 
 // Routes
-app.use('/api/acciones', accionesRoutes);
-app.use('/api/auth', authRoutes);
+app.use('/api-rse/acciones', accionesRoutes);
+app.use('/api/routes/auth', authRoutes);
 
 app.listen(PORT, () => {
-  console.log(`Main server running on port ${PORT}`);
+  console.log(`RSE server running on port ${PORT}`);
 });

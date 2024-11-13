@@ -3,13 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "scripts": {
+ "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "server1": "dotenv -e .env.production -- node server/server.js",
-    "server2": "dotenv -e .env.production -- node server/server-postulacion.js",
-    "start": "concurrently \"npm run dev\" \"npm run server1\" \"npm run server2\""
+    "server1": "node server/server.js",
+    "server2": "node server/server-postulacion.js",
+    "server3": "node server/connectDB.js",
+    "start": "concurrently \"npm run dev\" \"npm run server1\" \"npm run server2\" \"npm run server3\""
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.0.2",
