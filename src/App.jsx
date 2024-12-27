@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';
-import HeaderGf from "./components/HeaderGf";
+import React, { useRef, useEffect, useState } from 'react';  // Importa hooks de React
+import { Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';  // Importa componentes y hooks de react-router-dom
+import HeaderGf from "./components/HeaderGf"; // Importa componentes personalizados
 import LaEmpresaGf from "./components/LaEmpresaGf";
 import EmpresasGf from "./components/EmpresasGf";
 import RseGf from "./components/RseGf";
@@ -12,24 +12,27 @@ import PostulacionGf from "./components/PostulacionGf";
 import AdminRSE from "./components/AdminRSE";
 import LoginAdmin from "./components/LoginAdmin";
 
+// Componente principal de la aplicación
 function MainApp() { 
-  const headerRef = useRef(null);
-  const location = useLocation();
-  const navigate = useNavigate();
+  const headerRef = useRef(null);       // Referencia al encabezado
+  const location = useLocation();       // Hook para obtener la ubicación actual (ruta)
+  const navigate = useNavigate();       // Hook para cambiar de ruta programáticamente
 
+  // Función que maneja los clics en los elementos de navegación
   const handleNavClick = (href) => {
     if (href.startsWith('/')) {
-      navigate(href);
+      navigate(href);  // Navega a una nueva ruta
     } else if (href.startsWith('#')) {
       const element = document.getElementById(href.substring(1));
       if (element) {
-        const yOffset = -headerRef.current.offsetHeight;
+        const yOffset = -headerRef.current.offsetHeight;  // Ajuste para compensar la altura del encabezado
         const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({top: y, behavior: 'smooth'});
+        window.scrollTo({ top: y, behavior: 'smooth' });  // Desplaza suavemente a la sección
       }
     }
   };
 
+  // Efecto que se ejecuta cada vez que cambia la ubicación (cuando se navega)
   useEffect(() => {
     if (location.hash) {
       setTimeout(() => {
@@ -37,34 +40,35 @@ function MainApp() {
         if (element) {
           const yOffset = -headerRef.current.offsetHeight;
           const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-          window.scrollTo({top: y, behavior: 'smooth'});
+          window.scrollTo({ top: y, behavior: 'smooth' });
         }
       }, 0);
     }
   }, [location]);
 
-  return ( //React
+  return (
     <>
-      <HeaderGf ref={headerRef} onNavClick={handleNavClick} />
+      <HeaderGf ref={headerRef} onNavClick={handleNavClick} />  {/* Encabezado con navegación */}
       <main className="pt-16">
         <section id="quienes-somos">
-          <LaEmpresaGf />
+          <LaEmpresaGf />  {/* Sección "Quiénes somos" */}
         </section>
         <section id="nuestras-empresas">
-          <EmpresasGf />
+          <EmpresasGf />  {/* Sección "Nuestras empresas" */}
         </section>
         <section id="rse">
-          <RseGf />
+          <RseGf />  {/* Sección "RSE" */}
         </section>
         <section id="contacto">
-          <ContactoGf />
+          <ContactoGf />  {/* Sección de contacto */}
         </section>
       </main>
-      <FooterGf />
+      <FooterGf />  {/* Pie de página */}
     </>
   );
 }
 
+// Componente que maneja rutas protegidas por autenticación (En construcción)
 function ProtectedRoute({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -100,20 +104,21 @@ function ProtectedRoute({ children }) {
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/admin/login" replace />;
+    return <Navigate to="/admin/login" replace />;  // Redirige a login si no está autenticado
   }
 
-  return children;
+  return children;  // Renderiza los hijos si está autenticado
 }
 
+// Componente principal que maneja las rutas de la aplicación
 export function App() {
   return (
-    <Routes>
-      <Route path="/" element={<MainApp />} />
-      <Route path="/Agro-Silo/*" element={<AgroSiloApp />} />
-      <Route path="/Gcampobello/*" element={<GcampobelloApp />} />
-      <Route path="/PostulacionGf" element={<PostulacionGf />} />
-      <Route path="/admin/login" element={<LoginAdmin />} />
+    <Routes>  {/* Componente de rutas */}
+      <Route path="/" element={<MainApp />} />  {/* Ruta principal */}
+      <Route path="/Agro-Silo/*" element={<AgroSiloApp />} />  {/* Ruta para Agro-Silo */}
+      <Route path="/Gcampobello/*" element={<GcampobelloApp />} />  {/* Ruta para Gcampobello */}
+      <Route path="/PostulacionGf" element={<PostulacionGf />} />  {/* Ruta para la postulación */}
+      <Route path="/admin/login" element={<LoginAdmin />} />  {/* Ruta para login */}
       <Route 
         path="/admin/rse" 
         element={
@@ -121,7 +126,7 @@ export function App() {
             <AdminRSE />
           </ProtectedRoute>
         } 
-      />
+      />  {/* Ruta protegida para administradores */}
     </Routes>
   );
 }
