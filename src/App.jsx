@@ -12,7 +12,7 @@ import PostulacionGf from "./components/PostulacionGf";
 import AdminRSE from "./components/AdminRSE";
 import LoginAdmin from "./components/LoginAdmin";
 
-function MainApp() {
+function MainApp() { 
   const headerRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ function MainApp() {
     }
   }, [location]);
 
-  return (
+  return ( //React
     <>
       <HeaderGf ref={headerRef} onNavClick={handleNavClick} />
       <main className="pt-16">

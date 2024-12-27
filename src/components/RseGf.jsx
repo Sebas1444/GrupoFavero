@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { Book, Leaf, Users, ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 const focosRSE = [
@@ -22,33 +22,42 @@ const focosRSE = [
   }
 ];
 
+const accionesRSE = [
+  {
+    titulo: "Programa de Educación Ambiental",
+    descripcion: "Talleres y actividades para concientizar sobre el cuidado del medio ambiente.",
+    descripcionDetallada: "Nuestro Programa de Educación Ambiental ofrece una serie de talleres interactivos y actividades prácticas diseñadas para educar a la comunidad sobre la importancia de la conservación del medio ambiente. Los participantes aprenden sobre reciclaje, conservación de energía, y prácticas sostenibles que pueden implementar en su vida diaria.",
+    imagen: "/img/rse/rse6.jpeg",
+    posicionImagen: { x: 50, y: 50 }
+  },
+  {
+    titulo: "Proyecto de Reforestación",
+    descripcion: "Iniciativa para plantar árboles nativos en áreas deforestadas.",
+    descripcionDetallada: "El Proyecto de Reforestación es una iniciativa a largo plazo que busca restaurar ecosistemas degradados mediante la plantación de especies de árboles nativos. Trabajamos en colaboración con comunidades locales y expertos en silvicultura para seleccionar las especies más adecuadas y asegurar el cuidado continuo de las áreas reforestadas.",
+    imagen: "/img/rse/rse5.jpg",
+    posicionImagen: { x: 50, y: 50 }
+  },
+  {
+    titulo: "Programa de Capacitación Laboral",
+    descripcion: "Cursos de formación profesional para jóvenes de comunidades vulnerables.",
+    descripcionDetallada: "Nuestro Programa de Capacitación Laboral ofrece cursos gratuitos de formación profesional en diversas áreas como tecnología, oficios y habilidades empresariales. El programa está dirigido a jóvenes de comunidades vulnerables, con el objetivo de mejorar sus oportunidades de empleo y fomentar el desarrollo económico local.",
+    imagen: "/img/rse/rse5.jpg",
+    posicionImagen: { x: 50, y: 50 }
+  }
+];
+
 export default function RseGf() {
   const [activeTab, setActiveTab] = useState(0);
-  const [accionesRSE, setAccionesRSE] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [modalOpen, setModalOpen] = useState(false);
   const [selectedAccion, setSelectedAccion] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    const loadAcciones = async () => {
-      try {
-        const response = await fetch('/api-rse/acciones');
-        if (response.ok) {
-          const data = await response.json();
-          setAccionesRSE(data);
-        } else {
-          console.error('Failed to load acciones');
-        }
-      } catch (error) {
-        console.error('Error loading acciones:', error);
-      }
-    };
+    const interval = setInterval(() => {
+      setActiveTab((prevTab) => (prevTab + 1) % focosRSE.length);
+    }, 10000);
 
-    loadAcciones();
-
-    const checkForUpdates = setInterval(loadAcciones, 5000); // Verifica cada 5 segundos
-
-    return () => clearInterval(checkForUpdates);
+    return () => clearInterval(interval);
   }, []);
 
   const nextSlide = () => {
@@ -61,16 +70,16 @@ export default function RseGf() {
 
   const openModal = (accion) => {
     setSelectedAccion(accion);
-    setModalOpen(true);
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setModalOpen(false);
     setSelectedAccion(null);
+    setIsModalOpen(false);
   };
 
   return (
-    <section id="rse" className="bg-gradient-to-br bg-gray-100 to-white py-16">
+    <section id="rse" className="bg-gradient-to-br from-gray-100 to-gray-100 py-16">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-bold text-customBlue mb-8 text-center">RESPONSABILIDAD SOCIAL EMPRESARIAL</h2>
         
@@ -101,13 +110,17 @@ export default function RseGf() {
             ))}
           </div>
           <div className="bg-white rounded-lg shadow-lg p-6 transition-all duration-300 transform hover:scale-105">
-            <div className="flex items-center mb-4">
+            <div className="flex items-start mb-4">
               <div className={`p-3 rounded-full ${focosRSE[activeTab].color} mr-4`}>
                 {React.createElement(focosRSE[activeTab].icono, { className: "w-6 h-6" })}
               </div>
-              <h4 className="text-xl font-semibold text-customBlue">{focosRSE[activeTab].titulo}</h4>
+              <div className="flex-1">
+                <h4 className="text-xl font-semibold text-customBlue mb-2">{focosRSE[activeTab].titulo}</h4>
+                <div className="min-h-20">
+                  <p className="text-gray-700 leading-relaxed">{focosRSE[activeTab].descripcion}</p>
+                </div>
+              </div>
             </div>
-            <p className="text-gray-700 leading-relaxed">{focosRSE[activeTab].descripcion}</p>
           </div>
         </div>
 
@@ -165,8 +178,8 @@ export default function RseGf() {
         </div>
       </div>
 
-      {modalOpen && selectedAccion && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm">
+      {isModalOpen && selectedAccion && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-8 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-start mb-4">
               <h3 className="text-2xl font-bold text-customBlue">{selectedAccion.titulo}</h3>

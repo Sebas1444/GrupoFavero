@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
- "scripts": {
+  "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
@@ -41,7 +41,8 @@
     "react-leaflet": "^4.2.1",
     "react-router-dom": "^6.28.0",
     "tailwind-merge": "^1.14.0",
-    "tailwindcss-animate": "^1.0.6"
+    "tailwindcss-animate": "^1.0.6",
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",

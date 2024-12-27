@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 const LoginAdmin = () => {
   const [username, setUsername] = useState('');
@@ -8,20 +7,15 @@ const LoginAdmin = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
-    try {
-      const response = await axios.post('/api/auth/login', { username, password });
-      if (response.data.token) {
-        localStorage.setItem('adminToken', response.data.token);
-        navigate('/admin/rse'); 
-      } else {
-        setError('Credenciales inválidas');
-      }
-    } catch (error) {
-      console.error('Error al iniciar sesión:', error);
-      setError('Error al iniciar sesión. Por favor, intente nuevamente.');
+    
+    if (username === 'admin' && password === 'password') {
+      localStorage.setItem('isLoggedIn', 'true');
+      navigate('/admin/rse');
+    } else {
+      setError('Credenciales inválidas');
     }
   };
 

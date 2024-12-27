@@ -1,0 +1,64 @@
+Documentación de la Estructura
+GrupoFavero (main)
+├── README.md                    # Archivo de documentación general del proyecto.
+├── api                           # Carpeta que contiene los controladores y funciones relacionadas con la API backend.
+│   ├── models                    # Modelos de datos relacionados con MongoDB (actualmente no utilizados).
+│   │   ├── Accion.js             # Modelo de acción, usado previamente para la autenticación con MongoDB.
+│   │   └── User.js               # Modelo de usuario, relacionado con el sistema de autenticación.
+│   ├── routes                    # Rutas que definen la lógica de autenticación y el acceso a los servicios.
+│   │   └── auth.js               # Ruta que gestiona la autenticación de usuarios.
+│   ├── send-email-postulacion.js # Función encargada de enviar correos relacionados con postulaciones.
+│   └── send-email.js             # Función encargada de gestionar el formulario de contacto y enviar los comentarios.
+├── api-rse                       # Carpeta relacionada con el sistema de Responsabilidad Social Empresarial (RSE).
+│   ├── Acciones.js               # Lógica para actualizar la página principal con imágenes, títulos y descripciones.
+│   └── uploads                   # Archivos relacionados con los registros de acciones de RSE.
+│       └── log_de_acciones.json   # Log de las acciones realizadas en la página de RSE.
+├── dist                          # Archivos generados por el proceso de construcción del frontend.
+│   ├── GF.png                    # Imagen del logo o elementos visuales del proyecto.
+│   ├── assets                    # Archivos generados por Vite.js, incluye JS y CSS.
+│   │   ├── index-D5UtbU5G.js     # Archivo JS generado por Vite.js.
+│   │   └── index-g6lwRrIC.css   # Archivo CSS generado por Vite.js.
+│   ├── img                       # Archivos de imágenes generadas, aunque se recomienda eliminarlos ya que se cargan desde "public".
+│   │   ├── GrupoFavero.png       # Imagen del logo de GrupoFavero.
+│   │   ├── edificio.png          # Imagen del edificio de GrupoFavero.
+│   │   └── logo                  # Variados logos de empresas asociadas a GrupoFavero.
+│   ├── index.html                # Página HTML principal generada por el build.
+│   └── vite.svg                  # Icono del logo de Vite.js, utilizado en el proceso de build.
+├── eslint.config.js              # Configuración para ESLint, herramienta de análisis de código estático.
+├── index.html                    # Archivo HTML principal donde se inicializa la aplicación React.
+├── next.config.js                # Configuración de Next.js (no se está utilizando actualmente).
+├── package-lock.json             # Archivo de bloqueo de dependencias, generado por npm.
+├── package.json                  # Archivo que gestiona las dependencias y scripts del proyecto.
+├── postcss.config.js             # Configuración de PostCSS utilizada por Vite.js.
+├── public                        # Carpeta que contiene recursos estáticos, como imágenes y archivos CSS/JS.
+│   ├── GF.png                    # Imagen del logo de GrupoFavero.
+│   ├── img                       # Imágenes de la web, incluidas fotos y logos.
+│   │   ├── AgroSilo.png          # Imágenes relacionadas con la empresa Agro Silo.
+│   │   ├── rse                   # Imágenes asociadas con la Responsabilidad Social Empresarial (RSE).
+│   └── vite.svg                  # Icono de Vite.js.
+├── server                        # Archivos del backend que gestionan la lógica del servidor y las peticiones.
+│   ├── .env                 # Configuración del correo y contraseña que utiliza para enviar los correos
+│   ├── config.js                 # Configuración general del servidor.
+│   ├── connectDB.js              # Conexión a la base de datos.
+│   ├── server-postulacion.js     # Servidor encargado de gestionar las postulaciones y el envío de correos.
+│   └── server.js                 # Servidor encargado de gestionar el formulario de contacto y el envío de correos.
+├── src                           # Archivos del frontend donde se encuentran los componentes de la aplicación.
+│   ├── App.jsx                   # Componente principal que gestiona los contenedores y vistas de la aplicación.
+│   ├── assets                    # Archivos adicionales, como scripts o imágenes necesarias para el frontend.
+│   ├── components                # Carpeta con los componentes específicos de la web, agrupados por sección o funcionalidad.
+│   │   ├── AdminRSE.jsx          # Componente para la gestión de la Responsabilidad Social Empresarial (RSE).
+│   │   ├── Agro-Silo             # Componentes para la página de Agro Silo, como contacto, servicios, etc.
+│   │   ├── ContactoGf.jsx        # Componente para la página de contacto de GrupoFavero.
+│   │   ├── EmpresasGf.jsx        # Componente para listar las empresas asociadas a GrupoFavero.
+│   │   ├── FooterGf.jsx          # Componente para el pie de página de GrupoFavero.
+│   │   ├── LoginAdmin.jsx        # Componente para la vista de login del administrador.
+│   │   ├── PostulacionGf.jsx     # Componente para gestionar las postulaciones en GrupoFavero.
+│   │   └── RseGf.jsx             # Componente relacionado con la sección de RSE.
+│   ├── index.css                 # Estilos globales utilizados en la aplicación.
+│   ├── lib                       # Librerías adicionales.
+│   │   └── mail.js               # Funciones de envío de correos desde el frontend.
+│   └── main.jsx                  # Punto de entrada de la aplicación, donde se monta el componente principal.
+├── .env				           # Configuración de las credenciales de la base de datos
+├── tailwind.config.js            # Configuración personalizada de TailwindCSS para la estilización de la página.
+├── testDBConnection.js           # Script de prueba para verificar la conexión a la base de datos.
+└── vite.config.js                # Configuración de Vite.js, herramienta para el bundling y desarrollo.

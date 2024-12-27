@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PlusCircle, Save, Trash2, RefreshCw, Edit, X } from 'lucide-react';
 import axios from 'axios';
 
@@ -9,25 +10,44 @@ const AdminRSE = () => {
     descripcion: '',
     descripcionDetallada: '',
     imagen: '',
-    posicionImagen: { x: 50, y: 50 }
+    posicionImagen: { x: 50, y: 50 },
+    autor: '',
+    fechaCreacion: '',
   });
   const [syncMessage, setSyncMessage] = useState('');
   const [previewMode, setPreviewMode] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
+  const [lastActivity, setLastActivity] = useState(Date.now());
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadAcciones();
+    const activityCheck = setInterval(() => {
+      if (Date.now() - lastActivity > 120000) { // 2 minutos
+        navigate('/admin/login');
+      }
+    }, 10000); // Verificar cada 10 segundos
+
+    return () => clearInterval(activityCheck);
+  }, [lastActivity, navigate]);
+
+  useEffect(() => {
+    const events = ['mousedown', 'keydown', 'scroll', 'touchstart'];
+    const resetTimer = () => setLastActivity(Date.now());
+
+    events.forEach(event => window.addEventListener(event, resetTimer));
+
+    return () => {
+      events.forEach(event => window.removeEventListener(event, resetTimer));
+    };
   }, []);
 
   const loadAcciones = async () => {
     try {
-      const token = localStorage.getItem('adminToken');
-      const response = await axios.get('/api/acciones', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await axios.get('/api-rse/Acciones');
       setAcciones(response.data);
     } catch (error) {
-      console.error('Error loading acciones:', error);
+      console.error('Error al cargar acciones:', error);
       setSyncMessage('Error al cargar las acciones. Por favor, intente nuevamente.');
     }
   };
@@ -37,17 +57,23 @@ const AdminRSE = () => {
     setNewAccion(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleImageUpload = (e) => {
+  const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
+      const formData = new FormData();
+      formData.append('image', file);
+      try {
+        const response = await axios.post('/api-rse/uploads', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
         setNewAccion(prev => ({ 
           ...prev, 
-          imagen: reader.result
+          imagen: response.data.imageUrl
         }));
-      };
-      reader.readAsDataURL(file);
+      } catch (error) {
+        console.error('Error al subir la imagen:', error);
+        setSyncMessage('Error al subir la imagen. Por favor, intente nuevamente.');
+      }
     }
   };
 
@@ -70,18 +96,19 @@ const AdminRSE = () => {
 
   const handleSave = async () => {
     try {
-      const token = localStorage.getItem('adminToken');
       const method = editingIndex !== null ? 'PUT' : 'POST';
-      const url = editingIndex !== null ? `/api/acciones/${acciones[editingIndex]._id}` : '/api/acciones';
+      const url = editingIndex !== null ? `/api-rse/Acciones/${acciones[editingIndex]._id}` : '/api-rse/Acciones';
       
+      const accionToSave = {
+        ...newAccion,
+        autor: 'Admin', // Reemplazar con el nombre real del usuario autenticado
+        fechaCreacion: new Date().toISOString()
+      };
+
       const response = await axios({
         method: method,
         url: url,
-        data: newAccion,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
+        data: accionToSave
       });
 
       if (response.status === 200 || response.status === 201) {
@@ -91,7 +118,9 @@ const AdminRSE = () => {
           descripcion: '', 
           descripcionDetallada: '', 
           imagen: '',
-          posicionImagen: { x: 50, y: 50 }
+          posicionImagen: { x: 50, y: 50 },
+          autor: '',
+          fechaCreacion: ''
         });
         setPreviewMode(false);
         setEditingIndex(null);
@@ -100,19 +129,14 @@ const AdminRSE = () => {
         setSyncMessage('Error al guardar los cambios.');
       }
     } catch (error) {
-      console.error('Error saving accion:', error);
+      console.error('Error al guardar acción:', error);
       setSyncMessage('Error al guardar los cambios.');
     }
   };
 
   const handleDelete = async (index) => {
     try {
-      const token = localStorage.getItem('adminToken');
-      const response = await axios.delete(`/api/acciones/${acciones[index]._id}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      const response = await axios.delete(`/api-rse/Acciones/${acciones[index]._id}`);
 
       if (response.status === 200) {
         await loadAcciones();
@@ -121,7 +145,7 @@ const AdminRSE = () => {
         setSyncMessage('Error al eliminar la acción.');
       }
     } catch (error) {
-      console.error('Error deleting accion:', error);
+      console.error('Error al eliminar acción:', error);
       setSyncMessage('Error al eliminar la acción.');
     }
   };
@@ -138,10 +162,22 @@ const AdminRSE = () => {
       descripcion: '', 
       descripcionDetallada: '', 
       imagen: '',
-      posicionImagen: { x: 50, y: 50 }
+      posicionImagen: { x: 50, y: 50 },
+      autor: '',
+      fechaCreacion: ''
     });
     setPreviewMode(false);
     setEditingIndex(null);
+  };
+
+  const handleSync = async () => {
+    try {
+      await loadAcciones();
+      setSyncMessage('Sincronización completada con éxito.');
+    } catch (error) {
+      console.error('Error al sincronizar:', error);
+      setSyncMessage('Error al sincronizar. Por favor, intente nuevamente.');
+    }
   };
 
   return (
@@ -252,6 +288,10 @@ const AdminRSE = () => {
       )}
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-xl font-semibold">Acciones Actuales</h3>
+        <button onClick={handleSync} className="bg-blue-500 text-white px-4 py-2 rounded flex items-center">
+          <RefreshCw className="mr-2" />
+          Sincronizar
+        </button>
       </div>
       {syncMessage && <p className="text-green-600 mb-4">{syncMessage}</p>}
       <div>
@@ -271,6 +311,8 @@ const AdminRSE = () => {
                   }}
                 />
               </div>
+              <p className="text-xs text-gray-500 mt-2">Autor: {accion.autor}</p>
+              <p className="text-xs text-gray-500">Fecha: {new Date(accion.fechaCreacion).toLocaleString()}</p>
             </div>
             <div>
               <button onClick={() => handleEdit(index)} className="text-blue-500 mr-2">

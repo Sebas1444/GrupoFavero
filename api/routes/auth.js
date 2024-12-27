@@ -1,8 +1,34 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
-import User from '../models/User.js';
+import User from '../../models/User.js'; // Ajusta la ruta según sea necesario
 
 const router = express.Router();
+
+router.post('/register', async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    let user = await User.findOne({ username });
+    if (user) {
+      return res.status(400).json({ message: 'El usuario ya existe' });
+    }
+
+    user = new User({
+      username,
+      password
+    });
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
+
+    await user.save();
+
+    res.status(201).json({ success: true, message: 'Usuario registrado exitosamente' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error del servidor al registrar el usuario' });
+  }
+});
 
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
@@ -18,13 +44,10 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Contraseña incorrecta' });
     }
 
-    // Aquí podrías generar un JWT para autenticación y enviarlo en la respuesta
-    // Ejemplo:
-    // const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
-    // res.json({ token });
-
+    res.json({ success: true, message: 'Inicio de sesión exitoso' });
   } catch (error) {
-    res.status(500).json({ message: 'Error del servidor' });
+    console.error(error);
+    res.status(500).json({ message: 'Error del servidor al iniciar sesión' });
   }
 });
 
