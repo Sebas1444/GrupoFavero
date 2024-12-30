@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { Phone, Mail, Clock } from 'lucide-react';
-import { sendContactForm } from '../assets/actions';
+import React, { useState } from 'react'; // Importamos React y el hook useState para manejar el estado local.
+import { Phone, Mail, Clock } from 'lucide-react'; // Iconos de la biblioteca lucide-react para enriquecer la interfaz.
+import { sendContactForm } from '../assets/actions'; // Acción personalizada para enviar los datos del formulario.
 
 export default function ContactoGf() {
+  // Estado local para almacenar los datos del formulario.
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -10,28 +11,37 @@ export default function ContactoGf() {
     email: '',
     mensaje: ''
   });
+
+  // Estado local para manejar el estado del formulario (enviando, éxito, error).
   const [formStatus, setFormStatus] = useState(null);
 
+  // Manejador para actualizar los datos del formulario dinámicamente.
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevData => ({
       ...prevData,
-      [name]: value
+      [name]: value // Actualizamos el campo correspondiente en el estado.
     }));
   };
 
+  // Manejador para enviar el formulario.
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setFormStatus({ type: 'info', message: 'Enviando mensaje...' });
+    e.preventDefault(); // Prevenimos el comportamiento predeterminado del formulario (recargar la página).
+    setFormStatus({ type: 'info', message: 'Enviando mensaje...' }); // Mostramos un mensaje de estado inicial.
+
     try {
-      const result = await sendContactForm(new FormData(e.target));
+      const result = await sendContactForm(new FormData(e.target)); // Enviamos los datos del formulario.
       if (result.success) {
+        // Si el envío es exitoso, actualizamos el estado con un mensaje de éxito.
         setFormStatus({ type: 'success', message: result.message });
+        // Limpiamos el formulario.
         setFormData({ nombre: '', apellido: '', telefono: '', email: '', mensaje: '' });
       } else {
+        // Si ocurre un error del lado del servidor, mostramos un mensaje de error.
         setFormStatus({ type: 'error', message: result.message });
       }
     } catch (error) {
+      // Capturamos errores no previstos y mostramos un mensaje genérico de error.
       console.error('Error al enviar el formulario:', error);
       setFormStatus({ type: 'error', message: 'Error al enviar el mensaje' });
     }
@@ -39,12 +49,16 @@ export default function ContactoGf() {
 
   return (
     <section id="contacto" className="bg-gray-100 py-16">
+      {/* Sección principal del formulario de contacto */}
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-customBlue mb-8 text-center">CONTÁCTENOS</h2>
         <div className="grid md:grid-cols-2 gap-8">
+          
+          {/* Formulario para que los usuarios dejen su mensaje */}
           <div className="bg-white rounded-lg shadow-md p-6">
             <h3 className="text-xl font-semibold text-customBlue mb-4">Dejanos tu opinión</h3>
             <form onSubmit={handleSubmit}>
+              {/* Campos del formulario divididos en grids */}
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div>
                   <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
@@ -53,7 +67,7 @@ export default function ContactoGf() {
                     id="nombre"
                     name="nombre"
                     value={formData.nombre}
-                    onChange={handleChange}
+                    onChange={handleChange} // Actualizamos el estado al escribir.
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-customBlue"
                     required
                   />
@@ -71,6 +85,8 @@ export default function ContactoGf() {
                   />
                 </div>
               </div>
+
+              {/* Campos adicionales: teléfono y email */}
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div>
                   <label htmlFor="telefono" className="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
@@ -98,6 +114,8 @@ export default function ContactoGf() {
                   />
                 </div>
               </div>
+
+              {/* Campo para el mensaje */}
               <div className="mb-4">
                 <label htmlFor="mensaje" className="block text-sm font-medium text-gray-700 mb-1">Mensaje</label>
                 <textarea
@@ -110,6 +128,8 @@ export default function ContactoGf() {
                   required
                 ></textarea>
               </div>
+
+              {/* Botón para enviar el formulario */}
               <button
                 type="submit"
                 className="w-full bg-customBlue text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
@@ -117,6 +137,8 @@ export default function ContactoGf() {
                 Enviar
               </button>
             </form>
+
+            {/* Mensajes de estado del formulario */}
             {formStatus && (
               <div className={`mt-4 p-2 rounded ${formStatus.type === 'success' ? 'bg-green-100 text-green-800' :
                   formStatus.type === 'error' ? 'bg-red-100 text-red-800' :
@@ -126,9 +148,12 @@ export default function ContactoGf() {
               </div>
             )}
           </div>
+
+          {/* Sección con datos de contacto */}
           <div className="bg-white rounded-lg shadow-md p-6">
             <h3 className="text-xl font-semibold text-customBlue mb-4">Datos de Contacto</h3>
             <div className="space-y-4">
+              {/* Datos de contacto: Teléfono */}
               <div className="flex items-center">
                 <Phone className="w-5 h-5 text-customBlue mr-2" />
                 <div>
@@ -138,6 +163,8 @@ export default function ContactoGf() {
                   <p>+595 21 646345</p>
                 </div>
               </div>
+
+              {/* Horario */}
               <div className="flex items-center">
                 <Clock className="w-5 h-5 text-customBlue mr-2" />
                 <div>
@@ -145,6 +172,8 @@ export default function ContactoGf() {
                   <p>Lun-Vie: 7:00 a 17:00 - Sab 08:00 a 11:00</p>
                 </div>
               </div>
+
+              {/* Email */}
               <div className="flex items-center">
                 <Mail className="w-5 h-5 text-customBlue mr-2" />
                 <a href="mailto:info@grupofavero.com.py" className="text-customBlue hover:underline">
@@ -152,6 +181,8 @@ export default function ContactoGf() {
                 </a>
               </div>
             </div>
+
+            {/* Mapa embebido con Google Maps */}
             <div className="mt-6">
               <h4 className="font-semibold text-gray-700 mb-2">Ubicación</h4>
               <div className="aspect-w-16 aspect-h-9">
